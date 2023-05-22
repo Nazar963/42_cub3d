@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/05/19 11:48:59 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/05/22 21:20:04 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,10 +25,10 @@ OFILES = $(CFILES:.c=.o)
 all: libft $(NAME) $(TARGET)
 
 libft:
-	cd libft; \
+	@cd libft; \
 	$(MAKE); \
 	cd ..;
-	cd minilibx-linux; \
+	@cd minilibx-linux; \
 	$(MAKE); \
 
 $(NAME): $(OFILES)

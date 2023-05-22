@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/21 15:28:05 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/22 21:55:09 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	calculate_draw_start_and_draw_end(t_mlx *vlx)
 
 	draw_start = (-1) * vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
 	vlx->ray.draw_start = draw_start;
-	if (vlx->ray.draw_start < 0 )
+	if (vlx->ray.draw_start < 0)
 		vlx->ray.draw_start = 0;
 	vlx->ray.draw_end = vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
 	if (vlx->ray.draw_end >= SCREEN_HEIGHT)
@@ -336,13 +336,11 @@ void	hooks(t_mlx *vlx)
 		player_rotate_right(vlx);
 }
 
-int	start_the_rumble(void	*arg)
+int	start_the_rumble(t_mlx	*vlx)
 {
-	t_mlx	*vlx;
 	void	*img;
 	char	*address;
 
-	vlx = (t_mlx *)arg;
 
 	img = mlx_new_image(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	vlx->image.image = img;
@@ -351,12 +349,10 @@ int	start_the_rumble(void	*arg)
 	print_pavimento(vlx);
 	print_soffitto(vlx);
 	raycasting(vlx);
-	hooks(vlx);
 	vlx->ray.frame_time = 16 / 1000.0;
 	vlx->ray.move_speed = vlx->ray.frame_time * 5.0;
 	vlx->ray.rotate_speed = vlx->ray.frame_time * 3.0;
 	mlx_put_image_to_window(vlx->mlx, vlx->win, vlx->image.image, 0, 0);
-	mlx_destroy_image(vlx->mlx, vlx->image.image);
 	return (1);
 }
 
@@ -379,17 +375,18 @@ int	key_press(int keycode, t_mlx *vlx)
 	if (keycode == ESC)
 		quit(vlx);
 	else if (keycode == W)
-		vlx->key.w = 1;
+		player_move_forward(vlx);
 	else if (keycode == S)
-		vlx->key.s = 1;
+		player_move_backwards(vlx);
 	else if (keycode == A)
-		vlx->key.a = 1;
+		player_move_left(vlx);
 	else if (keycode == D)
-		vlx->key.d = 1;
+		player_move_right(vlx);
 	else if (keycode == LEFT)
-		vlx->key.left = 1;
+		player_rotate_left(vlx);
 	else if (keycode == RIGHT)
-		vlx->key.right = 1;
+		player_rotate_right(vlx);
+	start_the_rumble(vlx);
 	return (0);
 }
 
@@ -414,7 +411,7 @@ int	key_release(int keycode, t_mlx *vlx)
 int	main(int ac, char **av)
 {
 	t_mlx	vlx;
-
+c
 	if (ac != 2)
 	{
 		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");
@@ -429,10 +426,8 @@ int	main(int ac, char **av)
 	vlx.win = mlx_new_window(vlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	parse_input(av[1], &vlx);
 	init_values(&vlx);
-	vlx.key.p = 1;
-	mlx_loop_hook(vlx.mlx, start_the_rumble, (void *)&vlx);
-	mlx_hook(vlx.win, X_EVENT_KEY_PRESS, 0, &key_press, &vlx);
-	mlx_hook(vlx.win, X_EVENT_KEY_RELEASE, 0, &key_release, &vlx);
+	start_the_rumble(&vlx);
+	mlx_hook(vlx.win, 2, 1L << 0, key_press, &vlx);
 	mlx_hook(vlx.win, X_EVENT_EXIT, 0, &quit, &vlx);
 	mlx_loop(vlx.mlx);
 	return (0);

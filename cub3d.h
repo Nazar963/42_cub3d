@@ -13,7 +13,7 @@
 # include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
 
-# define ESC 53
+# define ESC 65307
 # define X_EVENT_KEY_PRESS 2
 # define X_EVENT_KEY_RELEASE 3
 # define X_EVENT_EXIT 17
@@ -23,8 +23,9 @@
 
 # define MAP_WIDTH 24
 # define MAP_HEIGHT 24
-# define SCREEN_WIDTH 640
-# define SCREEN_HEIGHT 480
+
+# define SCREEN_WIDTH 1500
+# define SCREEN_HEIGHT 1000
 
 #define RED 0xFF0000
 #define GREEN 0x00FF00
@@ -32,14 +33,14 @@
 #define WHITE 0xFFFFFF
 #define YELLOW 0xFFFF00
 
-# define W		13
-# define A		0
-# define S		1
-# define D		2
+# define W		119
+# define A		97
+# define S		115
+# define D		100
 # define UP		126
 # define DOWN	125
-# define LEFT	123
-# define RIGHT	124
+# define LEFT	65361
+# define RIGHT	65363
 
 typedef struct s_key
 {
@@ -140,7 +141,7 @@ int	parse_map_and_walls_and_colors(int fd, t_mlx *vlx);
 int	walls(char *line, t_mlx *vlx);
 int	colors(char *line, t_mlx *vlx);
 int	parse_input(char *file, t_mlx *vlx);
-
+int	start_the_rumble(t_mlx	*vlx);
 /* ------------------------------- init_values ------------------------------ */
 unsigned long	rgb_to_hex(int red, int green, int blue);
 int	*is_color(char **arr);
@@ -154,7 +155,7 @@ char	**ft_realloc(char **pointer, int size);
 int	strlen_arr(void **arr);
 void	free_arr(void ***arr);
 
-void	hooks(t_mlx *vlx);
+// void	hooks(t_mlx *vlx);
 void	player_rotate_left(t_mlx *vlx);
 void	player_rotate_right(t_mlx *vlx);
 void	player_move_right(t_mlx *vlx);
