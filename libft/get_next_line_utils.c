@@ -6,23 +6,12 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:07:41 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:50:06 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/20 14:51:42 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen1(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
 
 char	*ft_strchr1(char *s, int c)
 {

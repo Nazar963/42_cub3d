@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:38:37 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/21 15:28:05 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_pixel_put(int x, int y, int color, t_mlx *vlx)
 {
 	char	*dst;
 
-	dst = vlx->address + (y * vlx->line_length + x * (vlx->bits_per_pixel / 8));
+	dst = vlx->image.add + (y * vlx->image.line_length + x * (vlx->image.bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
 
@@ -204,21 +204,6 @@ void	raycasting(t_mlx *vlx)
 	}
 }
 
-//* ---------------------------------------------------------------------------------------------- */
-//*                                            mlx_utils                                           */
-//* ---------------------------------------------------------------------------------------------- */
-
-
-
-//* ---------------------------------------------------------------------------------------------- */
-//*                                          parse_colors                                          */
-//* ---------------------------------------------------------------------------------------------- */
-
-
-//* ---------------------------------------------------------------------------------------------- */
-//*                                        start_the_rumble                                        */
-//* ---------------------------------------------------------------------------------------------- */
-
 void	print_pavimento(t_mlx *vlx)
 {
 	int		i;
@@ -249,16 +234,129 @@ void	print_soffitto(t_mlx *vlx)
 	}
 }
 
+void	player_move_forward(t_mlx *vlx)
+{
+	int	y;
+	int	x;
+
+	y = (int)vlx->ray.pos_y;
+	x = (int)vlx->ray.pos_x + vlx->ray.dir_x * vlx->ray.move_speed;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_x += vlx->ray.dir_x * vlx->ray.move_speed;
+	y = (int)(vlx->ray.pos_y + vlx->ray.dir_y * vlx->ray.move_speed);
+	x = (int)vlx->ray.pos_x;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_y += vlx->ray.dir_y * vlx->ray.move_speed;
+}
+
+void	player_move_backwards(t_mlx *vlx)
+{
+	int	y;
+	int	x;
+
+	y = (int)vlx->ray.pos_y;
+	x = (int)vlx->ray.pos_x - vlx->ray.dir_x * vlx->ray.move_speed;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_x -= vlx->ray.dir_x * vlx->ray.move_speed;
+	y = (int)(vlx->ray.pos_y - vlx->ray.dir_y * vlx->ray.move_speed);
+	x = (int)vlx->ray.pos_x;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_y -= vlx->ray.dir_y * vlx->ray.move_speed;
+}
+
+void	player_move_left(t_mlx *vlx)
+{
+	int	y;
+	int	x;
+
+	y = (int)vlx->ray.pos_y;
+	x = (int)vlx->ray.pos_x + vlx->ray.dir_y * vlx->ray.move_speed;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_x += vlx->ray.dir_y * vlx->ray.move_speed;
+	y = (int)(vlx->ray.pos_y - vlx->ray.dir_x * vlx->ray.move_speed);
+	x = (int)vlx->ray.pos_x;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_y -= vlx->ray.dir_x * vlx->ray.move_speed;
+}
+
+void	player_move_right(t_mlx *vlx)
+{
+	int	y;
+	int	x;
+
+	y = (int)vlx->ray.pos_y;
+	x = (int)vlx->ray.pos_x - vlx->ray.dir_y * vlx->ray.move_speed;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_x -= vlx->ray.dir_y * vlx->ray.move_speed;
+	y = (int)(vlx->ray.pos_y + vlx->ray.dir_x * vlx->ray.move_speed);
+	x = (int)vlx->ray.pos_x;
+	if (vlx->map[y][x] != '1')
+		vlx->ray.pos_y += vlx->ray.dir_x * vlx->ray.move_speed;
+}
+
+void	player_rotate_right(t_mlx *vlx)
+{
+	double	old_direction_x;
+	double	old_plane_x;
+
+	old_direction_x = vlx->ray.dir_x;
+	vlx->ray.dir_x = vlx->ray.dir_x * cos(vlx->ray.rotate_speed) - vlx->ray.dir_y * sin(vlx->ray.rotate_speed);
+	vlx->ray.dir_y = old_direction_x * sin(vlx->ray.rotate_speed) + vlx->ray.dir_y * cos(vlx->ray.rotate_speed);
+	old_plane_x = vlx->ray.plane_x;
+	vlx->ray.plane_x = vlx->ray.plane_x * cos(vlx->ray.rotate_speed) - vlx->ray.plane_y * sin(vlx->ray.rotate_speed);
+	vlx->ray.plane_y = old_plane_x * sin(vlx->ray.rotate_speed) + vlx->ray.plane_y * cos(vlx->ray.rotate_speed);
+}
+
+void	player_rotate_left(t_mlx *vlx)
+{
+	double	old_direction_x;
+	double	old_plane_x;
+
+	old_direction_x = vlx->ray.dir_x;
+	vlx->ray.dir_x = vlx->ray.dir_x * cos(-vlx->ray.rotate_speed) - vlx->ray.dir_y * sin(-vlx->ray.rotate_speed);
+	vlx->ray.dir_y = old_direction_x * sin(-vlx->ray.rotate_speed) + vlx->ray.dir_y * cos(-vlx->ray.rotate_speed);
+	old_plane_x = vlx->ray.plane_x;
+	vlx->ray.plane_x = vlx->ray.plane_x * cos(-vlx->ray.rotate_speed) - vlx->ray.plane_y * sin(-vlx->ray.rotate_speed);
+	vlx->ray.plane_y = old_plane_x * sin(-vlx->ray.rotate_speed) + vlx->ray.plane_y * cos(-vlx->ray.rotate_speed);
+}
+
+void	hooks(t_mlx *vlx)
+{
+	if (vlx->key.w == 1)
+		player_move_forward(vlx);
+	else if (vlx->key.s == 1)
+		player_move_backwards(vlx);
+	else if (vlx->key.a == 1)
+		player_move_left(vlx);
+	else if (vlx->key.d == 1)
+		player_move_right(vlx);
+	else if (vlx->key.left == 1)
+		player_rotate_left(vlx);
+	else if (vlx->key.right == 1)
+		player_rotate_right(vlx);
+}
+
 int	start_the_rumble(void	*arg)
 {
 	t_mlx	*vlx;
+	void	*img;
+	char	*address;
 
 	vlx = (t_mlx *)arg;
 
-	vlx->img = mlx_new_image(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	vlx->address = mlx_get_data_addr(vlx->img, &vlx->bits_per_pixel, &vlx->line_length, &vlx->endian);
+	img = mlx_new_image(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	vlx->image.image = img;
+	address = mlx_get_data_addr(vlx->image.image, &vlx->image.bits_per_pixel, &vlx->image.line_length, &vlx->image.endian);
+	vlx->image.add = address;
 	print_pavimento(vlx);
 	print_soffitto(vlx);
+	raycasting(vlx);
+	hooks(vlx);
+	vlx->ray.frame_time = 16 / 1000.0;
+	vlx->ray.move_speed = vlx->ray.frame_time * 5.0;
+	vlx->ray.rotate_speed = vlx->ray.frame_time * 3.0;
+	mlx_put_image_to_window(vlx->mlx, vlx->win, vlx->image.image, 0, 0);
+	mlx_destroy_image(vlx->mlx, vlx->image.image);
 	return (1);
 }
 
@@ -319,7 +417,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		printf("\033[0;31mERORR: invalid number of argumets\n\033[0;37m");
+		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");
 		return (0);
 	}
 	else if (!ft_strnstr(av[1], ".cub", ft_strlen(av[1])))

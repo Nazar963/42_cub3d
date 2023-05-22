@@ -40,9 +40,9 @@ NAME = libft.a
 MAN = isalpha isdigit isalnum isascii isprint strlen memset bzero memcpy\
 		memmove strlcpy strlcat toupper tolower strchr strrchr strncmp memchr\
 		memcmp strnstr atoi calloc strdup substr strjoin strtrim split itoa\
-		strmapi striteri putchar_fd putstr_fd putendl_fd putnbr_fd \
+		strmapi striteri putchar_fd putstr_fd putendl_fd putnbr_fd get_next_line\
 
-MANFC = $(addprefix ft_,$(addsuffix .c, $(MAN))) get_next_line get_next_line_utils
+MANFC = $(addprefix ft_,$(addsuffix .c, $(MAN)))
 MANO = $(MANFC:.c=.o)
 
 BON = lstnew lstadd_front lstsize lstlast lstadd_back lstdelone lstclear\

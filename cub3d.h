@@ -5,9 +5,11 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stddef.h>
+# include <stdlib.h>
 # include <math.h>
 # include <X11/keysym.h>
 # include <X11/X.h>
+# include <stdio.h>
 # include "minilibx-linux/mlx.h"
 # include "libft/libft.h"
 
@@ -98,6 +100,17 @@ typedef struct s_wall
 	int		height;
 }		t_wall;
 
+typedef struct s_img
+{
+	void	*image;
+	char		*add;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	int		width;
+	int		height;
+}		t_img;
+
 typedef struct s_mlx
 {
 	void			*mlx;
@@ -119,6 +132,7 @@ typedef struct s_mlx
 	t_key			key;
 	t_ray			ray;
 	t_wall			wall[4];
+	t_img			image;
 }		t_mlx;
 
 /* ------------------------------ main_parse.c ------------------------------ */
@@ -139,6 +153,14 @@ void	init_values(t_mlx *vlx);
 char	**ft_realloc(char **pointer, int size);
 int	strlen_arr(void **arr);
 void	free_arr(void ***arr);
+
+void	hooks(t_mlx *vlx);
+void	player_rotate_left(t_mlx *vlx);
+void	player_rotate_right(t_mlx *vlx);
+void	player_move_right(t_mlx *vlx);
+void	player_move_left(t_mlx *vlx);
+void	player_move_backwards(t_mlx *vlx);
+void	player_move_forward(t_mlx *vlx);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:46:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:39:40 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/21 13:58:06 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	init_colors(t_mlx *vlx)
 			return (0);
 		}
 		convert_rgb(rgb, i, vlx);
-		free_arr((void ***)temp);
+		free_arr((void ***)&temp);
 		free(rgb);
 		i++;
 	}

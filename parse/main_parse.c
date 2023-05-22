@@ -6,11 +6,12 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:44:19 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/21 13:03:32 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+#include <stddef.h>
 
 int	map_checker(char *line, t_mlx *vlx)
 {
@@ -65,7 +66,7 @@ int	colors(char *line, t_mlx *vlx)
 		vlx->rgb[0] = ft_strdup(str_split[1]);
 	else if (ft_strncmp(str_split[0], "C", 1) == 0)
 		vlx->rgb[1] = ft_strdup(str_split[1]);
-	free_arr((void ***)str_split);
+	free_arr((void ***)&str_split);
 	return (1);
 }
 
@@ -79,16 +80,35 @@ int	walls(char *line, t_mlx *vlx)
 	if (strlen_arr((void **)str_split) != 2)
 		return (0);
 	if (ft_strncmp(str_split[0], "NO", 3) == 0)
+	{
 		vlx->xpm[0] = ft_strdup(str_split[1]);
+		if (vlx->xpm[0][ft_strlen(vlx->xpm[0]) - 1] == '\n')
+			vlx->xpm[0][ft_strlen(vlx->xpm[0]) - 1] = '\0';
+	}
 	else if (ft_strncmp(str_split[0], "EA", 3) == 0)
+	{
 		vlx->xpm[1] = ft_strdup(str_split[1]);
+		if (vlx->xpm[1][ft_strlen(vlx->xpm[1]) - 1] == '\n')
+			vlx->xpm[1][ft_strlen(vlx->xpm[1]) - 1] = '\0';
+
+	}
 	else if (ft_strncmp(str_split[0], "SO", 3) == 0)
+	{
 		vlx->xpm[2] = ft_strdup(str_split[1]);
+		if (vlx->xpm[2][ft_strlen(vlx->xpm[2]) - 1] == '\n')
+			vlx->xpm[2][ft_strlen(vlx->xpm[2]) - 1] = '\0';
+
+	}
 	else if (ft_strncmp(str_split[0], "WE", 3) == 0)
+	{
 		vlx->xpm[3] = ft_strdup(str_split[1]);
+		if (vlx->xpm[3][ft_strlen(vlx->xpm[3]) - 1] == '\n')
+			vlx->xpm[3][ft_strlen(vlx->xpm[3]) - 1] = '\0';
+
+	}
 	else if (ft_strncmp(str_split[0], "C", 2) && ft_strncmp(str_split[0], "F", 2))
 		return (0);
-	free_arr((void ***)str_split);
+	free_arr((void ***)&str_split);
 	return (1);
 }
 
@@ -103,6 +123,8 @@ int	parse_map_and_walls_and_colors(int fd, t_mlx *vlx)
 	while (strlen_arr((void **)vlx->xpm) != 4 || strlen_arr((void **)vlx->rgb) != 2)
 	{
 		line = get_next_line(fd);
+		if (ft_strlen(line) == 0)
+			continue ;
 		if (walls(line, vlx) == 0 || colors(line, vlx) == 0)
 		{
 			free(line);

@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "stdlib.h": "c"
-    }
+        "stdlib.h": "c",
+        "cub3d.h": "c",
+        "mlx.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

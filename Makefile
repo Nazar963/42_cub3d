@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/05/18 22:46:50 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/05/19 11:48:59 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ INC = -I.
 NAME = cub3d.a
 TARGET = cub3d
 
-CFILES = $(wildcard *.c) libft/*.c libft/get_next_line/*.c init/*.c parse/*.c utils/*.c
+CFILES = $(wildcard ./*.c) $(wildcard ./init/*.c) $(wildcard ./parse/*.c) $(wildcard ./utils/*.c)
+# CFILES = $(wildcard *.c) init/*.c parse/*.c utils/*.c
 
 OFILES = $(CFILES:.c=.o)
 
@@ -46,11 +47,17 @@ $(TARGET): $(CFILES)
 	@$(CC) -g $(CFLAGS) $(OFILES) libft/libft.a minilibx-linux/libmlx.a -lXext -lX11 -lm -o $(TARGET)
 
 clean:
-	@rm -f $(OFILES)
+	cd libft; \
+	$(MAKE) fclean; \
+	cd ..; \
+	cd minilibx-linux; \
+	$(MAKE) clean; \
+	cd ..; \
+	rm -f $(OFILES) \
 
 fclean: clean
 	@echo "\033[35mclean clean clean\033[0m"
-	@rm -f philo
+	@rm -f cub3d
 	@rm -f $(NAME)
 
 re: fclean all

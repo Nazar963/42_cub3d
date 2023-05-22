@@ -1,16 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 10:18:46 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:50:13 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/19 11:58:30 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*ft_strchr1(char *s, int c)
+{
+	if (!s)
+		return (0);
+	while (*s != (char)c)
+	{
+		if (*s == '\0')
+			return (NULL);
+		s++;
+	}
+	return ((char *)s);
+}
+
+char	*ft_strjoin1(char *str, char *buff)
+{
+	size_t	i;
+	size_t	j;
+	char	*new_str;
+
+	i = 1;
+	if (!str)
+	{
+		str = (char *)malloc(1 * sizeof(*str));
+		str[0] = '\0';
+	}
+	j = ft_strlen(str) + ft_strlen(buff);
+	if (!str || !buff)
+		return (NULL);
+	new_str = malloc((j + 1) * sizeof(*new_str));
+	if (new_str == NULL)
+		return (NULL);
+	if (str)
+		while (*str != '\0' && i++)
+			*(new_str++) = *(str++);
+	while (*buff != '\0')
+		*(new_str++) = *(buff++);
+	*new_str = '\0';
+	str -= (i - 1);
+	free(str);
+	return (new_str - j);
+}
 
 static char	*delete(char *str)
 {
@@ -26,7 +68,7 @@ static char	*delete(char *str)
 		free(str);
 		return (NULL);
 	}
-	new_str = (char *)malloc((ft_strlen1(str) - i + 1) * sizeof(*new_str));
+	new_str = (char *)malloc((ft_strlen(str) - i + 1) * sizeof(*new_str));
 	if (!new_str)
 		return (NULL);
 	i++;
@@ -113,26 +155,26 @@ char	*get_next_line(int fd)
 	str = delete(str);
 	return (new_str);
 }
-/*int	main(void)
-{
-	int		fd;
-	char	*loco;
-	fd = 0;
-	fd = open("read_error.txt", O_RDONLY);
-	loco = get_next_line(fd);
-	printf("%s", loco);
-	free(loco);
-	loco = get_next_line(fd);
-	printf("%s", loco);
-	free(loco);
-	loco = get_next_line(fd);
-	printf("%s", loco);
-	free(loco);
-	loco = get_next_line(fd);
-	printf("%s", loco);
-	free(loco);
-	loco = get_next_line(fd);
-	printf("%s", loco);
-	free(loco);
-	return (0);
-}*/
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*loco;
+// 	fd = 0;
+// 	fd = open("read_error.txt", O_RDONLY);
+// 	loco = get_next_line(fd);
+// 	printf("%s", loco);
+// 	free(loco);
+// 	loco = get_next_line(fd);
+// 	printf("%s", loco);
+// 	free(loco);
+// 	loco = get_next_line(fd);
+// 	printf("%s", loco);
+// 	free(loco);
+// 	loco = get_next_line(fd);
+// 	printf("%s", loco);
+// 	free(loco);
+// 	loco = get_next_line(fd);
+// 	printf("%s", loco);
+// 	free(loco);
+// 	return (0);
+// }
