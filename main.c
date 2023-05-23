@@ -6,177 +6,11 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 10:10:02 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:54:54 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	my_pixel_put(int x, int y, int color, t_mlx *vlx)
-{
-	char	*dst;
-
-	dst = vlx->image.add + (y * vlx->image.line_length + x * (vlx->image.bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
-
-//* ---------------------------------------------------------------------------------------------- */
-//*                                           raycasting                                           */
-//* ---------------------------------------------------------------------------------------------- */
-
-// void	get_ray_pos_dir(int i, t_mlx *vlx)
-// {
-
-// }
-
-// void	box_pos(t_mlx *vlx)
-// {
-
-// }
-
-void	delta_distance(t_mlx *vlx)
-{
-	if (vlx->ray.ray_dir_x == 0)
-		vlx->ray.delta_dist_x = 1e30;
-	else
-		vlx->ray.delta_dist_x = fabs(1 / vlx->ray.ray_dir_x);
-	if (vlx->ray.ray_dir_y == 0)
-		vlx->ray.delta_dist_y = 1e30;
-	else
-		vlx->ray.delta_dist_y = fabs(1 / vlx->ray.ray_dir_y);
-}
-
-void	step_side_dist_x(t_mlx *vlx)
-{
-	if (vlx->ray.ray_dir_x < 0)
-	{
-		vlx->ray.step_x = -1;
-		vlx->ray.side_dist_x = (vlx->ray.pos_x - vlx->ray.map_x) * vlx->ray.delta_dist_x;
-	}
-	else
-	{
-		vlx->ray.step_x = 1;
-		vlx->ray.side_dist_x = (vlx->ray.map_x + 1.0 - vlx->ray.pos_x) * vlx->ray.delta_dist_x;
-	}
-}
-
-void	step_side_dist_y(t_mlx *vlx)
-{
-	if (vlx->ray.ray_dir_y < 0)
-	{
-		vlx->ray.step_y = -1;
-		vlx->ray.side_dist_y = (vlx->ray.pos_y - vlx->ray.map_y) * vlx->ray.delta_dist_y;
-	}
-	else
-	{
-		vlx->ray.step_y = 1;
-		vlx->ray.side_dist_y = (vlx->ray.map_y + 1.0 - vlx->ray.pos_y) * vlx->ray.delta_dist_y;
-	}
-}
-
-void	set_texture(t_mlx *vlx)
-{
-	if (vlx->ray.side == 0)
-	{
-		if (vlx->ray.map_x > vlx->ray.pos_x)
-			vlx->ray.text_num = 1;
-		else
-			vlx->ray.text_num = 3;
-	}
-	else
-	{
-		if (vlx->ray.map_y > vlx->ray.pos_y)
-			vlx->ray.text_num = 2;
-		else
-			vlx->ray.text_num = 0;
-	}
-	
-}
-
-void	algorithm_DDA(t_mlx *vlx)
-{
-	while (vlx->ray.hit == 0)
-	{
-		if (vlx->ray.side_dist_x < vlx->ray.side_dist_y)
-		{
-			vlx->ray.side_dist_x += vlx->ray.delta_dist_x;
-			vlx->ray.map_x += vlx->ray.step_x;
-			vlx->ray.side = 0;
-		}
-		else
-		{
-			vlx->ray.side_dist_y += vlx->ray.delta_dist_y;
-			vlx->ray.map_y += vlx->ray.step_y;
-			vlx->ray.side = 1;
-		}
-		if (vlx->map[vlx->ray.map_y][vlx->ray.map_x] == '1')
-		{
-			vlx->ray.hit = 1;
-			set_texture(vlx);
-		}
-	}
-}
-
-void	calculate_distance_perspective(t_mlx *vlx)
-{
-	if (vlx->ray.side == 0)
-		vlx->ray.perp_wall_dist = vlx->ray.side_dist_x - vlx->ray.delta_dist_x;
-	else
-		vlx->ray.perp_wall_dist = vlx->ray.side_dist_y - vlx->ray.delta_dist_y;
-}
-
-void	calculate_vertical_line_height(t_mlx *vlx)
-{
-	vlx->ray.line_height = (int)(SCREEN_HEIGHT / vlx->ray.perp_wall_dist);
-}
-
-void	calculate_draw_start_and_draw_end(t_mlx *vlx)
-{
-	int	draw_start;
-
-	draw_start = (-1) * vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
-	vlx->ray.draw_start = draw_start;
-	if (vlx->ray.draw_start < 0)
-		vlx->ray.draw_start = 0;
-	vlx->ray.draw_end = vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
-	if (vlx->ray.draw_end >= SCREEN_HEIGHT)
-		vlx->ray.draw_end = SCREEN_HEIGHT - 1;
-}
-
-void	calculate_texture_x(t_mlx *vlx)
-{
-	if (vlx->ray.side == 0)
-		vlx->ray.wall_x = vlx->ray.pos_y + vlx->ray.perp_wall_dist * vlx->ray.ray_dir_y;
-	else
-		vlx->ray.wall_x = vlx->ray.pos_x + vlx->ray.perp_wall_dist * vlx->ray.ray_dir_x;
-	vlx->ray.wall_x -= floor(vlx->ray.wall_x);
-	vlx->ray.text_x = (int)(vlx->ray.wall_x * (double)WALL_WIDTH);
-	if (vlx->ray.side == 0 && vlx->ray.ray_dir_x > 0)
-		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
-	if (vlx->ray.side == 1 && vlx->ray.dir_y < 0)
-		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
-}
-
-void	draw_vertical_texture_stripe(int i, t_mlx *vlx)
-{
-	double	step;
-	double	wall_pos;
-	int		y;
-
-	step = 1.0 * WALL_HEIGHT / vlx->ray.line_height;
-	wall_pos = (vlx->ray.draw_start - SCREEN_HEIGHT / 2 + vlx->ray.line_height / 2) * step;
-	y = vlx->ray.draw_start;
-	while (y < vlx->ray.draw_end)
-	{
-		vlx->ray.text_y = (int)wall_pos & (WALL_HEIGHT - 1);
-		wall_pos += step;
-		vlx->ray.color = vlx->wall_dim[vlx->ray.text_num][WALL_HEIGHT * vlx->ray.text_y + vlx->ray.text_x];
-		if (vlx->ray.side == 1)
-			vlx->ray.color = (vlx->ray.color >> 1) & 8355711;
-		my_pixel_put(i, y, vlx->ray.color, vlx);
-		y++;
-	}
-}
 
 void	raycasting(t_mlx *vlx)
 {
@@ -185,20 +19,20 @@ void	raycasting(t_mlx *vlx)
 	i = 0;
 	while (i < SCREEN_WIDTH)
 	{
-		/* ----------------------------- get_ray_pos_dir ---------------------------- */
 		vlx->ray.camera_x = 2 * i / (double)SCREEN_WIDTH - 1;
-		vlx->ray.ray_dir_x = vlx->ray.dir_x + vlx->ray.plane_x * vlx->ray.camera_x;
-		vlx->ray.ray_dir_y = vlx->ray.dir_y + vlx->ray.plane_y * vlx->ray.camera_x;
-		/* --------------------------------- box_pos -------------------------------- */
+		vlx->ray.ray_dir_x = vlx->ray.dir_x + vlx->ray.plane_x
+			* vlx->ray.camera_x;
+		vlx->ray.ray_dir_y = vlx->ray.dir_y + vlx->ray.plane_y
+			* vlx->ray.camera_x;
 		vlx->ray.map_x = (int)vlx->ray.pos_x;
 		vlx->ray.map_y = (int)vlx->ray.pos_y;
 		vlx->ray.hit = 0;
 		delta_distance(vlx);
 		step_side_dist_x(vlx);
 		step_side_dist_y(vlx);
-		algorithm_DDA(vlx);
+		algorithm_dda(vlx);
 		calculate_distance_perspective(vlx);
-		calculate_vertical_line_height(vlx);
+		vlx->ray.line_height = (int)(SCREEN_HEIGHT / vlx->ray.perp_wall_dist);
 		calculate_draw_start_and_draw_end(vlx);
 		calculate_texture_x(vlx);
 		draw_vertical_texture_stripe(i, vlx);
@@ -206,148 +40,12 @@ void	raycasting(t_mlx *vlx)
 	}
 }
 
-void	print_pavimento(t_mlx *vlx)
-{
-	int		i;
-	int		j;
-
-	i = 0;
-	while (i < SCREEN_WIDTH)
-	{
-		j = SCREEN_HEIGHT / 2 - 1;
-		while (++j < SCREEN_HEIGHT)
-			my_pixel_put(i, j, vlx->pavimento, vlx);
-		i++;
-	}
-}
-
-void	print_soffitto(t_mlx *vlx)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < SCREEN_WIDTH)
-	{
-		j = -1;
-		while (++j < SCREEN_HEIGHT / 2)
-			my_pixel_put(i, j, vlx->soffitto, vlx);
-		i++;
-	}
-}
-
-void	player_move_forward(t_mlx *vlx)
-{
-	int	y;
-	int	x;
-
-	y = (int)vlx->ray.pos_y;
-	x = (int)vlx->ray.pos_x + vlx->ray.dir_x * vlx->ray.move_speed;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_x += vlx->ray.dir_x * vlx->ray.move_speed;
-	y = (int)(vlx->ray.pos_y + vlx->ray.dir_y * vlx->ray.move_speed);
-	x = (int)vlx->ray.pos_x;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_y += vlx->ray.dir_y * vlx->ray.move_speed;
-}
-
-void	player_move_backwards(t_mlx *vlx)
-{
-	int	y;
-	int	x;
-
-	y = (int)vlx->ray.pos_y;
-	x = (int)vlx->ray.pos_x - vlx->ray.dir_x * vlx->ray.move_speed;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_x -= vlx->ray.dir_x * vlx->ray.move_speed;
-	y = (int)(vlx->ray.pos_y - vlx->ray.dir_y * vlx->ray.move_speed);
-	x = (int)vlx->ray.pos_x;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_y -= vlx->ray.dir_y * vlx->ray.move_speed;
-}
-
-void	player_move_left(t_mlx *vlx)
-{
-	int	y;
-	int	x;
-
-	y = (int)vlx->ray.pos_y;
-	x = (int)vlx->ray.pos_x + vlx->ray.dir_y * vlx->ray.move_speed;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_x += vlx->ray.dir_y * vlx->ray.move_speed;
-	y = (int)(vlx->ray.pos_y - vlx->ray.dir_x * vlx->ray.move_speed);
-	x = (int)vlx->ray.pos_x;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_y -= vlx->ray.dir_x * vlx->ray.move_speed;
-}
-
-void	player_move_right(t_mlx *vlx)
-{
-	int	y;
-	int	x;
-
-	y = (int)vlx->ray.pos_y;
-	x = (int)vlx->ray.pos_x - vlx->ray.dir_y * vlx->ray.move_speed;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_x -= vlx->ray.dir_y * vlx->ray.move_speed;
-	y = (int)(vlx->ray.pos_y + vlx->ray.dir_x * vlx->ray.move_speed);
-	x = (int)vlx->ray.pos_x;
-	if (vlx->map[y][x] != '1')
-		vlx->ray.pos_y += vlx->ray.dir_x * vlx->ray.move_speed;
-}
-
-void	player_rotate_right(t_mlx *vlx)
-{
-	double	old_direction_x;
-	double	old_plane_x;
-
-	old_direction_x = vlx->ray.dir_x;
-	vlx->ray.dir_x = vlx->ray.dir_x * cos(vlx->ray.rotate_speed) - vlx->ray.dir_y * sin(vlx->ray.rotate_speed);
-	vlx->ray.dir_y = old_direction_x * sin(vlx->ray.rotate_speed) + vlx->ray.dir_y * cos(vlx->ray.rotate_speed);
-	old_plane_x = vlx->ray.plane_x;
-	vlx->ray.plane_x = vlx->ray.plane_x * cos(vlx->ray.rotate_speed) - vlx->ray.plane_y * sin(vlx->ray.rotate_speed);
-	vlx->ray.plane_y = old_plane_x * sin(vlx->ray.rotate_speed) + vlx->ray.plane_y * cos(vlx->ray.rotate_speed);
-}
-
-void	player_rotate_left(t_mlx *vlx)
-{
-	double	old_direction_x;
-	double	old_plane_x;
-
-	old_direction_x = vlx->ray.dir_x;
-	vlx->ray.dir_x = vlx->ray.dir_x * cos(-vlx->ray.rotate_speed) - vlx->ray.dir_y * sin(-vlx->ray.rotate_speed);
-	vlx->ray.dir_y = old_direction_x * sin(-vlx->ray.rotate_speed) + vlx->ray.dir_y * cos(-vlx->ray.rotate_speed);
-	old_plane_x = vlx->ray.plane_x;
-	vlx->ray.plane_x = vlx->ray.plane_x * cos(-vlx->ray.rotate_speed) - vlx->ray.plane_y * sin(-vlx->ray.rotate_speed);
-	vlx->ray.plane_y = old_plane_x * sin(-vlx->ray.rotate_speed) + vlx->ray.plane_y * cos(-vlx->ray.rotate_speed);
-}
-
-void	hooks(t_mlx *vlx)
-{
-	if (vlx->key.w == 1)
-		player_move_forward(vlx);
-	else if (vlx->key.s == 1)
-		player_move_backwards(vlx);
-	else if (vlx->key.a == 1)
-		player_move_left(vlx);
-	else if (vlx->key.d == 1)
-		player_move_right(vlx);
-	else if (vlx->key.left == 1)
-		player_rotate_left(vlx);
-	else if (vlx->key.right == 1)
-		player_rotate_right(vlx);
-}
-
 int	start_the_rumble(t_mlx	*vlx)
 {
-	void	*img;
-	char	*address;
-
-
-	img = mlx_new_image(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
-	vlx->image.image = img;
-	address = mlx_get_data_addr(vlx->image.image, &vlx->image.bits_per_pixel, &vlx->image.line_length, &vlx->image.endian);
-	vlx->image.add = address;
+	vlx->image.image = mlx_new_image(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	vlx->image.add = mlx_get_data_addr(vlx->image.image,
+			&vlx->image.bits_per_pixel, &vlx->image.line_length,
+			&vlx->image.endian);
 	print_pavimento(vlx);
 	print_soffitto(vlx);
 	raycasting(vlx);
@@ -358,19 +56,18 @@ int	start_the_rumble(t_mlx	*vlx)
 	return (1);
 }
 
-//! ---------------------------------------------------------------------------------------------- */
-
-//? -------------------------------------------------------------------------- */
-//?                                  key_stuff                                 */
-//? -------------------------------------------------------------------------- */
-
 int	quit(t_mlx *vlx)
 {
+	free_arr((void ***)&vlx->map);
+	free_arr((void ***)&vlx->rgb);
+	free_arr((void ***)&vlx->xpm);
+	mlx_destroy_image(vlx->mlx, vlx->image.image);
 	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
-
 
 int	key_press(int keycode, t_mlx *vlx)
 {
@@ -388,6 +85,8 @@ int	key_press(int keycode, t_mlx *vlx)
 		player_rotate_left(vlx);
 	else if (keycode == RIGHT)
 		player_rotate_right(vlx);
+	if (vlx->image.image)
+		mlx_destroy_image(vlx->mlx, vlx->image.image);
 	start_the_rumble(vlx);
 	return (0);
 }
@@ -396,6 +95,9 @@ int	main(int ac, char **av)
 {
 	t_mlx	vlx;
 
+	vlx.mlx = NULL;
+	vlx.win = NULL;
+	vlx.map = NULL;
 	if (ac != 2)
 	{
 		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");
@@ -412,7 +114,7 @@ int	main(int ac, char **av)
 	init_values(&vlx);
 	start_the_rumble(&vlx);
 	mlx_hook(vlx.win, 2, 1L << 0, key_press, &vlx);
-	mlx_hook(vlx.win, X_EVENT_EXIT, 0, &quit, &vlx);
+	mlx_hook(vlx.win, X_EVENT_EXIT, 0L, &quit, &vlx);
 	mlx_loop(vlx.mlx);
 	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:48:50 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/18 22:28:29 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:21:46 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-/// @brief it will create a new copy of pointer with the same values but of size size
+/// @brief create a new copy of pointer with the same values but of size size
 /// @param pointer is the old pointer to be modified
 /// @param size is the size to be applicated
 /// @return the new copy with the new allocation
@@ -36,7 +36,7 @@ char	**ft_realloc(char **pointer, int size)
 	return (new_pointer);
 }
 
-/// @brief this function will return the number of sub arrays presented in an array
+/// @brief return the number of sub arrays presented in an array
 /// @param arr a double pointer variable
 /// @return the number of sub arrays
 int	strlen_arr(void **arr)
@@ -49,8 +49,8 @@ int	strlen_arr(void **arr)
 	return (i);
 }
 
-
-/// @brief this function will free all sub arrays setting them to NULL and then freeing and setting up the array to NULL
+/// @brief free all sub arrays setting them to NULL and 
+///			then freeing and setting up the array to NULL
 /// @param &arr the address of a double pointer variable
 void	free_arr(void ***arr)
 {
@@ -65,4 +65,13 @@ void	free_arr(void ***arr)
 	}
 	free(*arr);
 	*arr = NULL;
+}
+
+void	my_pixel_put(int x, int y, int color, t_mlx *vlx)
+{
+	char	*dst;
+
+	dst = vlx->image.add
+		+ (y * vlx->image.line_length + x * (vlx->image.bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
 }

@@ -6,58 +6,13 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/22 18:45:06 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:16:44 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 #include <stddef.h>
-
-int	map_checker(char *line, t_mlx *vlx)
-{
-	char	**temp;
-
-	if (ft_strlen(line) == 1 && line[0] == '\n')
-		return (1);
-	if (!vlx->map)
-	{
-		vlx->map = (char **)malloc(sizeof(char *) * 2);
-		if (!vlx->map)
-			return (0);
-		vlx->map[0] = ft_strdup(line);
-		if (vlx->map[0][ft_strlen(vlx->map[0]) - 1] == '\n')
-			vlx->map[0][ft_strlen(vlx->map[0]) - 1] = '\0';
-		vlx->map[1] = NULL;
-	}
-	else
-	{
-		temp = ft_realloc(vlx->map, strlen_arr((void **)vlx->map) + 2);
-		if (!temp)
-			return (0);
-		vlx->map = temp;
-		vlx->map[strlen_arr((void **)vlx->map)] = ft_strdup(line);
-	}
-	return (1);
-}
-int	map(int fd, t_mlx *vlx)
-{
-	char	*line;
-
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (ft_strlen(line) == 0)
-			;
-		else if (!map_checker(line, vlx))
-		{
-			free(line);
-			return (0);
-		}
-		free(line);
-		line = get_next_line(fd);
-	}
-	return (1);
-}
+#include <string.h>
 
 int	colors(char *line, t_mlx *vlx)
 {
@@ -76,6 +31,13 @@ int	colors(char *line, t_mlx *vlx)
 	return (1);
 }
 
+void	walls_fill(char **str_split, t_mlx *vlx, int n)
+{
+	vlx->xpm[n] = ft_strdup(str_split[1]);
+	if (vlx->xpm[n][ft_strlen(vlx->xpm[n]) - 1] == '\n')
+		vlx->xpm[n][ft_strlen(vlx->xpm[n]) - 1] = '\0';
+}
+
 int	walls(char *line, t_mlx *vlx)
 {
 	char	**str_split;
@@ -86,33 +48,15 @@ int	walls(char *line, t_mlx *vlx)
 	if (strlen_arr((void **)str_split) != 2)
 		return (0);
 	if (ft_strncmp(str_split[0], "NO", 3) == 0)
-	{
-		vlx->xpm[0] = ft_strdup(str_split[1]);
-		if (vlx->xpm[0][ft_strlen(vlx->xpm[0]) - 1] == '\n')
-			vlx->xpm[0][ft_strlen(vlx->xpm[0]) - 1] = '\0';
-	}
+		walls_fill(str_split, vlx, 0);
 	else if (ft_strncmp(str_split[0], "EA", 3) == 0)
-	{
-		vlx->xpm[1] = ft_strdup(str_split[1]);
-		if (vlx->xpm[1][ft_strlen(vlx->xpm[1]) - 1] == '\n')
-			vlx->xpm[1][ft_strlen(vlx->xpm[1]) - 1] = '\0';
-
-	}
+		walls_fill(str_split, vlx, 1);
 	else if (ft_strncmp(str_split[0], "SO", 3) == 0)
-	{
-		vlx->xpm[2] = ft_strdup(str_split[1]);
-		if (vlx->xpm[2][ft_strlen(vlx->xpm[2]) - 1] == '\n')
-			vlx->xpm[2][ft_strlen(vlx->xpm[2]) - 1] = '\0';
-
-	}
+		walls_fill(str_split, vlx, 2);
 	else if (ft_strncmp(str_split[0], "WE", 3) == 0)
-	{
-		vlx->xpm[3] = ft_strdup(str_split[1]);
-		if (vlx->xpm[3][ft_strlen(vlx->xpm[3]) - 1] == '\n')
-			vlx->xpm[3][ft_strlen(vlx->xpm[3]) - 1] = '\0';
-
-	}
-	else if (ft_strncmp(str_split[0], "C", 2) && ft_strncmp(str_split[0], "F", 2))
+		walls_fill(str_split, vlx, 3);
+	else if (ft_strncmp(str_split[0], "C", 2)
+		&& ft_strncmp(str_split[0], "F", 2))
 		return (0);
 	free_arr((void ***)&str_split);
 	return (1);
@@ -126,7 +70,8 @@ int	parse_map_and_walls_and_colors(int fd, t_mlx *vlx)
 	vlx->xpm = (char **)ft_calloc(sizeof(char *), 5);
 	if (!vlx->rgb || !vlx->xpm)
 		return (0);
-	while (strlen_arr((void **)vlx->xpm) != 4 || strlen_arr((void **)vlx->rgb) != 2)
+	while (strlen_arr((void **)vlx->xpm) != 4
+		|| strlen_arr((void **)vlx->rgb) != 2)
 	{
 		line = get_next_line(fd);
 		if (ft_strlen(line) == 0)

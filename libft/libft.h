@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:58:14 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/21 12:40:32 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:00:44 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <fcntl.h>
 # include <unistd.h>
 
-char	*ft_strjoin1(char *str, char *buff);
-char	*process_line(char *str);
-char	*process_str(int fd, char *buff, char *str);
-char	*get_next_line(int fd);
+char		*ft_strjoin1(char *str, char *buff);
+char		*process_line(char *str);
+char		*process_str(int fd, char *buff, char *str);
+char		*get_next_line(int fd);
 
 // -------------------------------------------------------------------------- */
 //                                 <ctype.h>                                  */

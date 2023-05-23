@@ -6,24 +6,11 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 10:18:46 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/19 11:58:30 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 17:02:15 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-char	*ft_strchr1(char *s, int c)
-{
-	if (!s)
-		return (0);
-	while (*s != (char)c)
-	{
-		if (*s == '\0')
-			return (NULL);
-		s++;
-	}
-	return ((char *)s);
-}
 
 char	*ft_strjoin1(char *str, char *buff)
 {
@@ -112,7 +99,7 @@ char	*process_str(int fd, char *buff, char *str)
 	int	num;
 
 	num = 1;
-	while (!ft_strchr1(str, '\n') && num != 0)
+	while (!ft_strchr(str, '\n') && num != 0)
 	{
 		num = read(fd, buff, BUFFER_SIZE);
 		if (num == -1)
