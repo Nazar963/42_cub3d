@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/22 21:55:09 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/05/23 10:10:02 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,15 @@ void	my_pixel_put(int x, int y, int color, t_mlx *vlx)
 //*                                           raycasting                                           */
 //* ---------------------------------------------------------------------------------------------- */
 
-void	get_ray_pos_dir(int i, t_mlx *vlx)
-{
-	vlx->ray.camera_x = 2 * i / (double)SCREEN_WIDTH - 1;
-	vlx->ray.ray_dir_x = vlx->ray.dir_x + vlx->ray.plane_x * vlx->ray.camera_x;
-	vlx->ray.ray_dir_y = vlx->ray.dir_y + vlx->ray.plane_y * vlx->ray.camera_x;
-}
+// void	get_ray_pos_dir(int i, t_mlx *vlx)
+// {
 
-void	box_pos(t_mlx *vlx)
-{
-	vlx->ray.map_x = (int)vlx->ray.pos_x;
-	vlx->ray.map_y = (int)vlx->ray.pos_y;
-	vlx->ray.hit = 0;
-}
+// }
+
+// void	box_pos(t_mlx *vlx)
+// {
+
+// }
 
 void	delta_distance(t_mlx *vlx)
 {
@@ -189,8 +185,14 @@ void	raycasting(t_mlx *vlx)
 	i = 0;
 	while (i < SCREEN_WIDTH)
 	{
-		get_ray_pos_dir(i, vlx);
-		box_pos(vlx);
+		/* ----------------------------- get_ray_pos_dir ---------------------------- */
+		vlx->ray.camera_x = 2 * i / (double)SCREEN_WIDTH - 1;
+		vlx->ray.ray_dir_x = vlx->ray.dir_x + vlx->ray.plane_x * vlx->ray.camera_x;
+		vlx->ray.ray_dir_y = vlx->ray.dir_y + vlx->ray.plane_y * vlx->ray.camera_x;
+		/* --------------------------------- box_pos -------------------------------- */
+		vlx->ray.map_x = (int)vlx->ray.pos_x;
+		vlx->ray.map_y = (int)vlx->ray.pos_y;
+		vlx->ray.hit = 0;
 		delta_distance(vlx);
 		step_side_dist_x(vlx);
 		step_side_dist_y(vlx);
@@ -390,28 +392,10 @@ int	key_press(int keycode, t_mlx *vlx)
 	return (0);
 }
 
-int	key_release(int keycode, t_mlx *vlx)
-{
-	if (keycode == W)
-		vlx->key.w = 0;
-	else if (keycode == S)
-		vlx->key.s = 0;
-	else if (keycode == A)
-		vlx->key.a = 0;
-	else if (keycode == D)
-		vlx->key.d = 0;
-	else if (keycode == LEFT)
-		vlx->key.left = 0;
-	else if (keycode == RIGHT)
-		vlx->key.right = 0;
-	return (0);
-}
-
-
 int	main(int ac, char **av)
 {
 	t_mlx	vlx;
-c
+
 	if (ac != 2)
 	{
 		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");

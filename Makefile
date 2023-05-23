@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/05/22 21:20:04 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/05/23 09:39:36 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,18 +25,20 @@ OFILES = $(CFILES:.c=.o)
 all: libft $(NAME) $(TARGET)
 
 libft:
-	@cd libft; \
-	$(MAKE); \
-	cd ..;
-	@cd minilibx-linux; \
-	$(MAKE); \
+	@make -C libft
+	@make -C minilibx-linux
 
 $(NAME): $(OFILES)
-	@echo "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
-	@echo "\033[35m ███▒▒▒▒▒▒▒\033[0m"
-	@echo "\033[35m █████▒▒▒▒▒\033[0m"
-	@echo "\033[35m ████████▒▒\033[0m"
-	@echo "\033[35m ██████████\033[0m"
+	@printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m █████▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ████████▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ██████████\033[0m"
+	@sleep 1
 	@$(AR) $(ARF) $@ $^
 	@echo "\033[36m compiling\033[0m"
 

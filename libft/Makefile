@@ -53,7 +53,7 @@ BONO = $(BONFC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(MANO)
-	$(AR) $(ARF) $@ $^
+	@$(AR) $(ARF) $@ $^
 
 %.o: %.c
 	@$(CC) -c $(CFLAGS) $(INC) $< -o $@
