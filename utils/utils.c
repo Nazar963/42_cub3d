@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:48:50 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:21:46 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:55:59 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,16 @@ void	my_pixel_put(int x, int y, int color, t_mlx *vlx)
 	dst = vlx->image.add
 		+ (y * vlx->image.line_length + x * (vlx->image.bits_per_pixel / 8));
 	*(unsigned int *)dst = color;
+}
+
+int	new_quit(t_mlx *vlx)
+{
+	free_arr((void ***)&vlx->map);
+	free_arr((void ***)&vlx->rgb);
+	free_arr((void ***)&vlx->xpm);
+	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
+	write(2, "ERORR: map boarders have a gap\n", 32);
+	exit(EXIT_SUCCESS);
 }

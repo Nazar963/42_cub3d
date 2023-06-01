@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:46:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:10 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:55:12 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,21 +32,17 @@ void	fill_wall(int i, t_mlx *vlx)
 int	init_walls(t_mlx *vlx)
 {
 	int		i;
-	void	*temp;
-	int		*address;
 
 	i = 0;
 	while (i < 4)
 	{
-		temp = mlx_xpm_file_to_image(vlx->mlx, vlx->xpm[i],
+		vlx->wall[i].image = mlx_xpm_file_to_image(vlx->mlx, vlx->xpm[i],
 				&(vlx->wall[i].width), &(vlx->wall[i].height));
-		vlx->wall[i].image = temp;
 		if (!vlx->wall[i].image)
 			return (0);
-		address = (int *)mlx_get_data_addr(vlx->wall[i].image,
+		vlx->wall[i].add = (int *)mlx_get_data_addr(vlx->wall[i].image,
 				&vlx->wall[i].bits_per_pixel, &vlx->wall[i].line_length,
 				&vlx->wall[i].endian);
-		vlx->wall[i].add = address;
 		if (!vlx->wall[i].add)
 			return (0);
 		fill_wall(i, vlx);

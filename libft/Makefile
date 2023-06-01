@@ -56,7 +56,7 @@ $(NAME): $(MANO)
 	@$(AR) $(ARF) $@ $^
 
 %.o: %.c
-	@$(CC) -c $(CFLAGS) $(INC) $< -o $@
+	@$(CC) -g -c $(CFLAGS) $(INC) $< -o $@
 
 clean:
 	@rm -f $(MANO) $(BONO)

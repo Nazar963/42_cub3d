@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:49:04 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 22:14:32 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,10 +143,13 @@ typedef struct s_mlx
 	t_img			image;
 }		t_mlx;
 
+/* --------------------------------- main.c --------------------------------- */
+int				quit(t_mlx *vlx);
+
 /* --------------------------- parse/main_parse.c --------------------------- */
 int				colors(char *line, t_mlx *vlx);
 void			walls_fill(char **str_split, t_mlx *vlx, int n);
-int				walls(char *line, t_mlx *vlx);
+int				walls(char **line, t_mlx *vlx);
 int				parse_map_and_walls_and_colors(int fd, t_mlx *vlx);
 int				parse_input(char *file, t_mlx *vlx);
 
@@ -154,6 +157,8 @@ int				parse_input(char *file, t_mlx *vlx);
 void			map_checker_helper_1(char *line, t_mlx *vlx);
 int				map_checker(char *line, t_mlx *vlx);
 int				map(int fd, t_mlx *vlx);
+void			quite_1(t_mlx *vlx, int fd);
+void			evil_line(int fd);
 
 /* --------------------------- init/init_values.c --------------------------- */
 void			fill_wall(int i, t_mlx *vlx);
@@ -178,6 +183,7 @@ char			**ft_realloc(char **pointer, int size);
 int				strlen_arr(void **arr);
 void			free_arr(void ***arr);
 void			my_pixel_put(int x, int y, int color, t_mlx *vlx);
+int				new_quit(t_mlx *vlx);
 
 /* -------------------------- raycasting/distance.c ------------------------- */
 void			delta_distance(t_mlx *vlx);
@@ -203,5 +209,7 @@ void			player_rotate_right(t_mlx *vlx);
 void			print_pavimento(t_mlx *vlx);
 void			print_soffitto(t_mlx *vlx);
 void			player_rotate_left(t_mlx *vlx);
+int				check_boarders_helper(int i, int j, t_mlx *vlx);
+int				check_boarders(t_mlx *vlx);
 
 #endif

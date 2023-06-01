@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 10:18:46 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:02:15 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:46:12 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ char	*ft_strjoin1(char *str, char *buff)
 	i = 1;
 	if (!str)
 	{
-		str = (char *)malloc(1 * sizeof(*str));
+		str = (char *)ft_calloc(1, sizeof(*str));
 		str[0] = '\0';
 	}
 	j = ft_strlen(str) + ft_strlen(buff);
 	if (!str || !buff)
 		return (NULL);
-	new_str = malloc((j + 1) * sizeof(*new_str));
+	new_str = ft_calloc((j + 1), sizeof(*new_str));
 	if (new_str == NULL)
 		return (NULL);
 	if (str)
@@ -55,7 +55,7 @@ static char	*delete(char *str)
 		free(str);
 		return (NULL);
 	}
-	new_str = (char *)malloc((ft_strlen(str) - i + 1) * sizeof(*new_str));
+	new_str = (char *)ft_calloc((ft_strlen(str) - i + 1), sizeof(*new_str));
 	if (!new_str)
 		return (NULL);
 	i++;
@@ -77,7 +77,7 @@ char	*process_line(char *str)
 		return (NULL);
 	while (str[i] != '\n' && str[i])
 		i++;
-	new_str = (char *)malloc((i + 2) * sizeof(*new_str));
+	new_str = (char *)ft_calloc((i + 2), sizeof(*new_str));
 	if (!new_str)
 		return (NULL);
 	i = -1;
@@ -129,7 +129,7 @@ char	*get_next_line(int fd)
 		}
 		return (NULL);
 	}
-	buff = (char *)malloc((BUFFER_SIZE + 1) * sizeof(*buff));
+	buff = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(*buff));
 	if (!buff)
 		return (NULL);
 	str = process_str(fd, buff, str);

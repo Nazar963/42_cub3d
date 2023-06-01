@@ -6,14 +6,14 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 15:58:14 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:00:44 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:39:19 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1
 
 # include	<stddef.h> // size_t NULL
 # include	<stdlib.h> // malloc free sizeof

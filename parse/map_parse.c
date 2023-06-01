@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:13:20 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:17:45 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 22:14:43 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	map_checker_helper_1(char *line, t_mlx *vlx)
 
 int	map_checker(char *line, t_mlx *vlx)
 {
-	if (ft_strlen(line) == 1 && line[0] == '\n')
+	if ((ft_strlen(line) == 1 && line[0] == '\n') || ft_strlen(line) == 0)
 		return (1);
 	if (!vlx->map)
 	{
@@ -53,9 +53,7 @@ int	map(int fd, t_mlx *vlx)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (ft_strlen(line) == 0)
-			;
-		else if (!map_checker(line, vlx))
+		if (!map_checker(line, vlx))
 		{
 			free(line);
 			return (0);
@@ -64,4 +62,46 @@ int	map(int fd, t_mlx *vlx)
 		line = get_next_line(fd);
 	}
 	return (1);
+}
+
+void	quite_1(t_mlx *vlx, int fd)
+{
+	int	i;
+
+	i = 0;
+	if (vlx->rgb[1])
+	{
+		free(vlx->rgb[1]);
+		vlx->rgb[1] = NULL;
+	}
+	free_arr((void ***)&vlx->rgb);
+	while (i < 4)
+	{
+		if (vlx->xpm[i])
+		{
+			free(vlx->xpm[i]);
+			vlx->xpm[i] = NULL;
+		}
+		i++;
+	}
+	free_arr((void ***)&vlx->xpm);
+	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
+	close(fd);
+	write(2, "ERORR: missing color or wall texture\n", 38);
+	exit(EXIT_SUCCESS);
+}
+
+void	evil_line(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = NULL;
+		line = get_next_line(fd);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:54:54 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/01 18:28:33 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	main(int ac, char **av)
 {
 	t_mlx	vlx;
 
-	vlx.mlx = NULL;
 	vlx.win = NULL;
 	vlx.map = NULL;
 	if (ac != 2)
@@ -103,7 +102,8 @@ int	main(int ac, char **av)
 		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");
 		return (0);
 	}
-	else if (!ft_strnstr(av[1], ".cub", ft_strlen(av[1])))
+	else if (!ft_strnstr(ft_strchr(av[1], '.'), ".cub", 4)
+		|| ft_strlen(ft_strchr(av[1], '.')) != 4)
 	{
 		printf("\033[0;31mERROR: invalid input file format\n\033[0;37m");
 		return (0);
@@ -111,10 +111,11 @@ int	main(int ac, char **av)
 	vlx.mlx = mlx_init();
 	vlx.win = mlx_new_window(vlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	parse_input(av[1], &vlx);
+	if (!check_boarders(&vlx))
+		new_quit(&vlx);
 	init_values(&vlx);
 	start_the_rumble(&vlx);
 	mlx_hook(vlx.win, 2, 1L << 0, key_press, &vlx);
 	mlx_hook(vlx.win, X_EVENT_EXIT, 0L, &quit, &vlx);
 	mlx_loop(vlx.mlx);
-	return (0);
 }
