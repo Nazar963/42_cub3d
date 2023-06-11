@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 22:13:48 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/10 15:54:08 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,17 +76,12 @@ int	parse_map_and_walls_and_colors(int fd, t_mlx *vlx)
 {
 	char	*line;
 
-	vlx->rgb = (char **)ft_calloc(sizeof(char *), 3);
-	vlx->xpm = (char **)ft_calloc(sizeof(char *), 5);
-	if (!vlx->rgb || !vlx->xpm)
-		return (0);
 	while (strlen_arr((void **)vlx->xpm) != 4
 		|| strlen_arr((void **)vlx->rgb) != 2)
 	{
 		line = get_next_line(fd);
-		if (ft_strlen(line) == 0 || (ft_strlen(line) == 1 && line[0] == '\n'))
-			;
-		else if (walls(&line, vlx) == 0 || colors(line, vlx) == 0)
+		if (ft_strlen(line) != 0 && (ft_strlen(line) != 1 && line[0] != '\n')
+			&& (walls(&line, vlx) == 0 || colors(line, vlx) == 0))
 		{
 			evil_line(fd);
 			return (0);
@@ -109,6 +104,10 @@ int	parse_input(char *file, t_mlx *vlx)
 		printf("\033[0;31mERROR: unable to open file\n\033[0;37m");
 		exit(EXIT_FAILURE);
 	}
+	vlx->rgb = (char **)ft_calloc(sizeof(char *), 3);
+	vlx->xpm = (char **)ft_calloc(sizeof(char *), 5);
+	if (vlx->xpm == NULL || vlx->rgb == NULL)
+		return (0);
 	if (parse_map_and_walls_and_colors(fd, vlx) == 0)
 	{
 		if (strlen_arr((void **)vlx->xpm) != 4
@@ -116,5 +115,7 @@ int	parse_input(char *file, t_mlx *vlx)
 			quite_1(vlx, fd);
 	}
 	close(fd);
+	if (!check_boarders(vlx))
+		new_quit(vlx);
 	return (1);
 }

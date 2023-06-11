@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 18:28:33 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:29:41 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,22 +46,23 @@ int	start_the_rumble(t_mlx	*vlx)
 	vlx->image.add = mlx_get_data_addr(vlx->image.image,
 			&vlx->image.bits_per_pixel, &vlx->image.line_length,
 			&vlx->image.endian);
-	print_pavimento(vlx);
-	print_soffitto(vlx);
+	print_pavimento_soffitto(vlx);
 	raycasting(vlx);
-	vlx->ray.frame_time = 16 / 1000.0;
-	vlx->ray.move_speed = vlx->ray.frame_time * 5.0;
-	vlx->ray.rotate_speed = vlx->ray.frame_time * 3.0;
 	mlx_put_image_to_window(vlx->mlx, vlx->win, vlx->image.image, 0, 0);
 	return (1);
 }
 
 int	quit(t_mlx *vlx)
 {
+	int	i;
+
+	i = -1;
 	free_arr((void ***)&vlx->map);
 	free_arr((void ***)&vlx->rgb);
 	free_arr((void ***)&vlx->xpm);
 	mlx_destroy_image(vlx->mlx, vlx->image.image);
+	while (++i < 4)
+		mlx_destroy_image(vlx->mlx, vlx->wall[i].image);
 	mlx_destroy_window(vlx->mlx, vlx->win);
 	mlx_destroy_display(vlx->mlx);
 	free(vlx->mlx);
@@ -69,22 +70,22 @@ int	quit(t_mlx *vlx)
 	return (0);
 }
 
-int	key_press(int keycode, t_mlx *vlx)
+int	key_press(int key, t_mlx *vlx)
 {
-	if (keycode == ESC)
+	if (key == ESC)
 		quit(vlx);
-	else if (keycode == W)
-		player_move_forward(vlx);
-	else if (keycode == S)
-		player_move_backwards(vlx);
-	else if (keycode == A)
-		player_move_left(vlx);
-	else if (keycode == D)
-		player_move_right(vlx);
-	else if (keycode == LEFT)
-		player_rotate_left(vlx);
-	else if (keycode == RIGHT)
-		player_rotate_right(vlx);
+	else if (key == W)
+		move_forward(vlx);
+	else if (key == S)
+		move_backwards(vlx);
+	else if (key == A)
+		move_left(vlx);
+	else if (key == D)
+		move_right(vlx);
+	else if (key == LEFT)
+		rotate_left(vlx);
+	else if (key == RIGHT)
+		rotate_right(vlx);
 	if (vlx->image.image)
 		mlx_destroy_image(vlx->mlx, vlx->image.image);
 	start_the_rumble(vlx);
@@ -111,9 +112,8 @@ int	main(int ac, char **av)
 	vlx.mlx = mlx_init();
 	vlx.win = mlx_new_window(vlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	parse_input(av[1], &vlx);
-	if (!check_boarders(&vlx))
-		new_quit(&vlx);
-	init_values(&vlx);
+	if (init_values(&vlx) == 0)
+		new_quit_2(&vlx);
 	start_the_rumble(&vlx);
 	mlx_hook(vlx.win, 2, 1L << 0, key_press, &vlx);
 	mlx_hook(vlx.win, X_EVENT_EXIT, 0L, &quit, &vlx);

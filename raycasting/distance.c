@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:04:30 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:19:58 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 12:06:12 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	set_texture(t_mlx *vlx)
 
 void	algorithm_dda(t_mlx *vlx)
 {
-	while (vlx->ray.hit == 0)
+	while (vlx->ray.hit == 0 && vlx->map[vlx->ray.map_y][vlx->ray.map_x])
 	{
 		if (vlx->ray.side_dist_x < vlx->ray.side_dist_y)
 		{

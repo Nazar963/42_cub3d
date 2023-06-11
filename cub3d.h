@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 22:14:32 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:34:17 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,15 @@
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGHT 1000
 
-# define RED 0xFF0000
-# define GREEN 0x00FF00
-# define BLUE 0x0000FF
-# define WHITE 0xFFFFFF
-# define YELLOW 0xFFFF00
-
 # define W		119
 # define A		97
 # define S		115
 # define D		100
 # define LEFT	65361
 # define RIGHT	65363
+
+# define MOVE_SPEED 0.08
+# define ROTATE_SPEED 0.048
 
 typedef struct s_key
 {
@@ -80,8 +77,6 @@ typedef struct s_ray
 	double			step;
 	double			text_pos;
 	double			frame_time;
-	double			move_speed;
-	double			rotate_speed;
 	int				map_x;
 	int				map_y;
 	int				step_x;
@@ -132,8 +127,6 @@ typedef struct s_mlx
 	char			**rgb;
 	char			**map;
 
-	int				wall_dim[4][WALL_HEIGHT * WALL_WIDTH];
-
 	unsigned long	pavimento;
 	unsigned long	soffitto;
 
@@ -161,16 +154,13 @@ void			quite_1(t_mlx *vlx, int fd);
 void			evil_line(int fd);
 
 /* --------------------------- init/init_values.c --------------------------- */
-void			fill_wall(int i, t_mlx *vlx);
 int				init_walls(t_mlx *vlx);
 void			set_val_1(double dir_x, double dir_y, double pla_y, t_mlx *vlx);
-void			init_vectors(int x, int y, t_mlx *vlx);
-void			init_values(t_mlx *vlx);
+void			init_vectors(int x, int y, int *count, t_mlx *vlx);
+int				init_values(t_mlx *vlx);
 
 /* ------------------------------ init/colors.c ----------------------------- */
-unsigned long	rgb_to_hex(int red, int green, int blue);
-int				*is_color(char **arr);
-void			convert_rgb(int *rgb, int i, t_mlx *vlx);
+int				is_color(int *color, char **arr);
 int				init_colors(t_mlx *vlx);
 
 /* --------------------------- init/validate_map.c -------------------------- */
@@ -199,17 +189,17 @@ void			calculate_texture_x(t_mlx *vlx);
 void			draw_vertical_texture_stripe(int i, t_mlx *vlx);
 
 /* --------------------------------- move.c --------------------------------- */
-void			player_move_forward(t_mlx *vlx);
-void			player_move_backwards(t_mlx *vlx);
-void			player_move_left(t_mlx *vlx);
-void			player_move_right(t_mlx *vlx);
-void			player_rotate_right(t_mlx *vlx);
+void			move_forward(t_mlx *vlx);
+void			move_backwards(t_mlx *vlx);
+void			move_left(t_mlx *vlx);
+void			move_right(t_mlx *vlx);
+void			rotate_right(t_mlx *vlx);
 
 /* ----------------------------- rotate_print.c ----------------------------- */
-void			print_pavimento(t_mlx *vlx);
-void			print_soffitto(t_mlx *vlx);
-void			player_rotate_left(t_mlx *vlx);
+void			print_pavimento_soffitto(t_mlx *vlx);
+void			rotate_left(t_mlx *vlx);
 int				check_boarders_helper(int i, int j, t_mlx *vlx);
 int				check_boarders(t_mlx *vlx);
+int				new_quit_2(t_mlx *vlx);
 
 #endif

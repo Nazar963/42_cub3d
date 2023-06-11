@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:48:50 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 21:55:59 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:30:03 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,6 @@ int	new_quit(t_mlx *vlx)
 	mlx_destroy_window(vlx->mlx, vlx->win);
 	mlx_destroy_display(vlx->mlx);
 	free(vlx->mlx);
-	write(2, "ERORR: map boarders have a gap\n", 32);
+	write(2, "ERORR: invalid formatting\n", 32);
 	exit(EXIT_SUCCESS);
 }

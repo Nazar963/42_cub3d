@@ -6,13 +6,13 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:26:07 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 17:58:09 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:31:02 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	print_pavimento(t_mlx *vlx)
+void	print_pavimento_soffitto(t_mlx *vlx)
 {
 	int		i;
 	int		j;
@@ -25,13 +25,6 @@ void	print_pavimento(t_mlx *vlx)
 			my_pixel_put(i, j, vlx->pavimento, vlx);
 		i++;
 	}
-}
-
-void	print_soffitto(t_mlx *vlx)
-{
-	int	i;
-	int	j;
-
 	i = 0;
 	while (i < SCREEN_WIDTH)
 	{
@@ -42,21 +35,21 @@ void	print_soffitto(t_mlx *vlx)
 	}
 }
 
-void	player_rotate_left(t_mlx *vlx)
+void	rotate_left(t_mlx *vlx)
 {
 	double	old_direction_x;
 	double	old_plane_x;
 
 	old_direction_x = vlx->ray.dir_x;
-	vlx->ray.dir_x = vlx->ray.dir_x * cos(-vlx->ray.rotate_speed)
-		- vlx->ray.dir_y * sin(-vlx->ray.rotate_speed);
-	vlx->ray.dir_y = old_direction_x * sin(-vlx->ray.rotate_speed)
-		+ vlx->ray.dir_y * cos(-vlx->ray.rotate_speed);
+	vlx->ray.dir_x = vlx->ray.dir_x * cos(-ROTATE_SPEED)
+		- vlx->ray.dir_y * sin(-ROTATE_SPEED);
+	vlx->ray.dir_y = old_direction_x * sin(-ROTATE_SPEED)
+		+ vlx->ray.dir_y * cos(-ROTATE_SPEED);
 	old_plane_x = vlx->ray.plane_x;
-	vlx->ray.plane_x = vlx->ray.plane_x * cos(-vlx->ray.rotate_speed)
-		- vlx->ray.plane_y * sin(-vlx->ray.rotate_speed);
-	vlx->ray.plane_y = old_plane_x * sin(-vlx->ray.rotate_speed)
-		+ vlx->ray.plane_y * cos(-vlx->ray.rotate_speed);
+	vlx->ray.plane_x = vlx->ray.plane_x * cos(-ROTATE_SPEED)
+		- vlx->ray.plane_y * sin(-ROTATE_SPEED);
+	vlx->ray.plane_y = old_plane_x * sin(-ROTATE_SPEED)
+		+ vlx->ray.plane_y * cos(-ROTATE_SPEED);
 }
 
 int	check_boarders_helper(int i, int j, t_mlx *vlx)
@@ -64,18 +57,21 @@ int	check_boarders_helper(int i, int j, t_mlx *vlx)
 	if (i == 0)
 	{
 		while (vlx->map[i][++j])
-			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' ')
+			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' '
+				&& !(vlx->map[i][j] >= '\t' && vlx->map[i][j] <= '\r'))
 				return (0);
 	}
 	else if (i == (strlen_arr((void **)vlx->map) - 1))
 	{
 		while (vlx->map[i][++j])
-			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' ')
+			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' '
+				&& !(vlx->map[i][j] >= '\t' && vlx->map[i][j] <= '\r'))
 				return (0);
 	}
 	else
 	{
-		while (vlx->map[i][++j] == ' ')
+		while (vlx->map[i][++j] == ' '
+			|| (vlx->map[i][j] >= '\t' && vlx->map[i][j] <= '\r'))
 			;
 		if (vlx->map[i][j] != '1'
 			|| vlx->map[i][ft_strlen(vlx->map[i]) - 1] != '1')
@@ -97,4 +93,21 @@ int	check_boarders(t_mlx *vlx)
 			return (0);
 	}
 	return (1);
+}
+
+int	new_quit_2(t_mlx *vlx)
+{
+	int	i;
+
+	i = -1;
+	free_arr((void ***)&vlx->map);
+	free_arr((void ***)&vlx->rgb);
+	free_arr((void ***)&vlx->xpm);
+	while (++i < 4)
+		mlx_destroy_image(vlx->mlx, vlx->wall[i].image);
+	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
+	write(2, "ERORR: invalid initialization\n", 32);
+	exit(EXIT_SUCCESS);
 }

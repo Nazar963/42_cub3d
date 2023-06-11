@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:33 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/05/23 17:20:21 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/10 12:01:25 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	draw_vertical_texture_stripe(int i, t_mlx *vlx)
 	{
 		vlx->ray.text_y = (int)wall_pos & (WALL_HEIGHT - 1);
 		wall_pos += step;
-		vlx->ray.color = vlx->wall_dim[vlx->ray.text_num]
+		vlx->ray.color = vlx->wall[vlx->ray.text_num].add
 		[WALL_HEIGHT * vlx->ray.text_y + vlx->ray.text_x];
 		if (vlx->ray.side == 1)
 			vlx->ray.color = (vlx->ray.color >> 1) & 8355711;

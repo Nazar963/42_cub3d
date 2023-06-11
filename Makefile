@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/05/23 16:10:27 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/06/11 15:25:35 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 AR = ar -rcs
 INC = -I.
 NAME = cub3d.a
-TARGET = cub3d
+TARGET = cub3D
 
 CFILES = $(wildcard ./*.c) $(wildcard ./init/*.c) $(wildcard ./parse/*.c) $(wildcard ./utils/*.c) \
 	$(wildcard ./raycasting/*.c)
@@ -60,7 +60,7 @@ clean:
 
 fclean: clean
 	@echo "\033[35mclean clean clean\033[0m"
-	@rm -f cub3d
+	@rm -f cub3D
 	@rm -f $(NAME)
 
 re: fclean all

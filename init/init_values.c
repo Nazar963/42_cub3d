@@ -6,35 +6,18 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 16:46:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/01 15:55:12 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/11 15:33:09 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	fill_wall(int i, t_mlx *vlx)
-{
-	int		x;
-	int		y;
-
-	y = -1;
-	while (++y < vlx->wall[i].height)
-	{
-		x = -1;
-		while (++x < vlx->wall[i].width)
-		{
-			vlx->wall_dim[i][vlx->wall[i].height * y + x]
-				= vlx->wall[i].add[vlx->wall[i].height * y + x];
-		}
-	}
-}
-
 int	init_walls(t_mlx *vlx)
 {
 	int		i;
 
-	i = 0;
-	while (i < 4)
+	i = -1;
+	while (++i < 4)
 	{
 		vlx->wall[i].image = mlx_xpm_file_to_image(vlx->mlx, vlx->xpm[i],
 				&(vlx->wall[i].width), &(vlx->wall[i].height));
@@ -45,9 +28,6 @@ int	init_walls(t_mlx *vlx)
 				&vlx->wall[i].endian);
 		if (!vlx->wall[i].add)
 			return (0);
-		fill_wall(i, vlx);
-		mlx_destroy_image(vlx->mlx, vlx->wall[i].image);
-		i++;
 	}
 	return (1);
 }
@@ -60,8 +40,9 @@ void	set_val_1(double dir_x, double dir_y, double pla_y, t_mlx *vlx)
 	vlx->ray.plane_y = pla_y;
 }
 
-void	init_vectors(int x, int y, t_mlx *vlx)
+void	init_vectors(int x, int y, int *count, t_mlx *vlx)
 {
+	(*count)++;
 	vlx->ray.pos_x = x + 0.5;
 	vlx->ray.pos_y = y + 0.5;
 	if (vlx->map[y][x] == 'N')
@@ -74,12 +55,25 @@ void	init_vectors(int x, int y, t_mlx *vlx)
 		set_val_1(-1, 0, -0.66, vlx);
 }
 
-void	init_values(t_mlx *vlx)
+int	quit_invalid_wall_path(t_mlx *vlx)
+{
+	free_arr((void ***)&vlx->map);
+	free_arr((void ***)&vlx->rgb);
+	free_arr((void ***)&vlx->xpm);
+	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
+	write(2, "ERORR: map boarders have a gap\n", 32);
+	exit(EXIT_SUCCESS);
+}
+
+int	init_values(t_mlx *vlx)
 {
 	if (init_walls(vlx) == 0)
-		return ;
+		quit_invalid_wall_path(vlx);
 	if (init_colors(vlx) == 0)
-		return ;
+		return (0);
 	if (validate_map(vlx) == 0)
-		return ;
+		return (0);
+	return (1);
 }
