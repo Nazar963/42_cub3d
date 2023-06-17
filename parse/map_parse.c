@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 17:13:20 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/10 15:39:05 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/16 21:01:20 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,12 @@ int	map_checker(char *line, t_mlx *vlx)
 		return (1);
 	if (!vlx->map)
 	{
-		vlx->map = (char **)malloc(sizeof(char *) * 2);
+		vlx->map = (char **)ft_calloc(sizeof(char *), 2);
 		if (!vlx->map)
 			return (0);
 		vlx->map[0] = ft_strdup(line);
 		if (vlx->map[0][ft_strlen(vlx->map[0]) - 1] == '\n')
 			vlx->map[0][ft_strlen(vlx->map[0]) - 1] = '\0';
-		vlx->map[1] = NULL;
 	}
 	else
 		map_checker_helper_1(line, vlx);

@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/06/11 15:25:35 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/06/17 11:33:45 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,9 +17,8 @@ INC = -I.
 NAME = cub3d.a
 TARGET = cub3D
 
-CFILES = $(wildcard ./*.c) $(wildcard ./init/*.c) $(wildcard ./parse/*.c) $(wildcard ./utils/*.c) \
-	$(wildcard ./raycasting/*.c)
-# CFILES = $(wildcard *.c) init/*.c parse/*.c utils/*.c
+CFILES = main.c move.c rotate_print.c init/colors.c init/init_values.c init/validate_map.c \
+	parse/main_parse.c parse/map_parse.c utils/utils.c raycasting/calculate_line.c raycasting/distance.c
 
 OFILES = $(CFILES:.c=.o)
 

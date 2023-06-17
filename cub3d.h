@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/11 15:34:17 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 11:36:29 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void			init_vectors(int x, int y, int *count, t_mlx *vlx);
 int				init_values(t_mlx *vlx);
 
 /* ------------------------------ init/colors.c ----------------------------- */
-int				is_color(int *color, char **arr);
+int				is_color(char **arr);
 int				init_colors(t_mlx *vlx);
 
 /* --------------------------- init/validate_map.c -------------------------- */
@@ -176,17 +176,17 @@ void			my_pixel_put(int x, int y, int color, t_mlx *vlx);
 int				new_quit(t_mlx *vlx);
 
 /* -------------------------- raycasting/distance.c ------------------------- */
-void			delta_distance(t_mlx *vlx);
-void			step_side_dist_x(t_mlx *vlx);
-void			step_side_dist_y(t_mlx *vlx);
+void			calculate_the_distance_to_the_next_x_or_y_side(t_mlx *vlx);
+void			calculate_the_step_and_initial_side_distance_x(t_mlx *vlx);
+void			calculate_the_step_and_initial_side_distance_y(t_mlx *vlx);
 void			set_texture(t_mlx *vlx);
-void			algorithm_dda(t_mlx *vlx);
+void			perform_digital_differential_analysis(t_mlx *vlx);
 
 /* ----------------------- raycasting/calculate_line.c ---------------------- */
-void			calculate_distance_perspective(t_mlx *vlx);
+void			calculate_distance_projected_on_camera_direction(t_mlx *vlx);
 void			calculate_draw_start_and_draw_end(t_mlx *vlx);
 void			calculate_texture_x(t_mlx *vlx);
-void			draw_vertical_texture_stripe(int i, t_mlx *vlx);
+void			draw_stripe_color_pixel(int i, t_mlx *vlx);
 
 /* --------------------------------- move.c --------------------------------- */
 void			move_forward(t_mlx *vlx);

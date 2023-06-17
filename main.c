@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/11 15:29:41 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 11:37:58 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	raycasting(t_mlx *vlx)
 		vlx->ray.map_x = (int)vlx->ray.pos_x;
 		vlx->ray.map_y = (int)vlx->ray.pos_y;
 		vlx->ray.hit = 0;
-		delta_distance(vlx);
-		step_side_dist_x(vlx);
-		step_side_dist_y(vlx);
-		algorithm_dda(vlx);
-		calculate_distance_perspective(vlx);
+		calculate_the_distance_to_the_next_x_or_y_side(vlx);
+		calculate_the_step_and_initial_side_distance_x(vlx);
+		calculate_the_step_and_initial_side_distance_y(vlx);
+		perform_digital_differential_analysis(vlx);
+		calculate_distance_projected_on_camera_direction(vlx);
 		vlx->ray.line_height = (int)(SCREEN_HEIGHT / vlx->ray.perp_wall_dist);
 		calculate_draw_start_and_draw_end(vlx);
 		calculate_texture_x(vlx);
-		draw_vertical_texture_stripe(i, vlx);
+		draw_stripe_color_pixel(i, vlx);
 		i++;
 	}
 }
@@ -96,7 +96,6 @@ int	main(int ac, char **av)
 {
 	t_mlx	vlx;
 
-	vlx.win = NULL;
 	vlx.map = NULL;
 	if (ac != 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:48:50 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/11 15:30:03 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:30:22 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**ft_realloc(char **pointer, int size)
 	char	**new_pointer;
 
 	i = 0;
-	new_pointer = (char **)malloc(sizeof(char *) * size);
+	new_pointer = (char **)ft_calloc(sizeof(char *), size);
 	if (!new_pointer)
 		return (NULL);
 	while (pointer[i])
@@ -30,8 +30,6 @@ char	**ft_realloc(char **pointer, int size)
 		new_pointer[i] = pointer[i];
 		i++;
 	}
-	new_pointer[i] = NULL;
-	new_pointer[i + 1] = NULL;
 	free(pointer);
 	return (new_pointer);
 }

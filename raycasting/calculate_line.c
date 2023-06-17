@@ -6,13 +6,13 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:33 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/10 12:01:25 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 11:36:42 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	calculate_distance_perspective(t_mlx *vlx)
+void	calculate_distance_projected_on_camera_direction(t_mlx *vlx)
 {
 	if (vlx->ray.side == 0)
 		vlx->ray.perp_wall_dist = vlx->ray.side_dist_x - vlx->ray.delta_dist_x;
@@ -49,7 +49,7 @@ void	calculate_texture_x(t_mlx *vlx)
 		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
 }
 
-void	draw_vertical_texture_stripe(int i, t_mlx *vlx)
+void	draw_stripe_color_pixel(int i, t_mlx *vlx)
 {
 	double	step;
 	double	wall_pos;

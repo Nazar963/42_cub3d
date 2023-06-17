@@ -6,13 +6,13 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:04:30 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/11 12:06:12 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 11:25:42 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-void	delta_distance(t_mlx *vlx)
+void	calculate_the_distance_to_the_next_x_or_y_side(t_mlx *vlx)
 {
 	if (vlx->ray.ray_dir_x == 0)
 		vlx->ray.delta_dist_x = 1e30;
@@ -24,7 +24,7 @@ void	delta_distance(t_mlx *vlx)
 		vlx->ray.delta_dist_y = fabs(1 / vlx->ray.ray_dir_y);
 }
 
-void	step_side_dist_x(t_mlx *vlx)
+void	calculate_the_step_and_initial_side_distance_x(t_mlx *vlx)
 {
 	if (vlx->ray.ray_dir_x < 0)
 	{
@@ -40,7 +40,7 @@ void	step_side_dist_x(t_mlx *vlx)
 	}
 }
 
-void	step_side_dist_y(t_mlx *vlx)
+void	calculate_the_step_and_initial_side_distance_y(t_mlx *vlx)
 {
 	if (vlx->ray.ray_dir_y < 0)
 	{
@@ -74,7 +74,7 @@ void	set_texture(t_mlx *vlx)
 	}
 }
 
-void	algorithm_dda(t_mlx *vlx)
+void	perform_digital_differential_analysis(t_mlx *vlx)
 {
 	while (vlx->ray.hit == 0 && vlx->map[vlx->ray.map_y][vlx->ray.map_x])
 	{
