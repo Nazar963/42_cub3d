@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 15:48:50 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/16 22:30:22 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:28:28 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ char	**ft_realloc(char **pointer, int size)
 	new_pointer = (char **)ft_calloc(sizeof(char *), size);
 	if (!new_pointer)
 		return (NULL);
+	if (!pointer)
+		return (new_pointer);
 	while (pointer[i])
 	{
 		new_pointer[i] = pointer[i];
@@ -42,6 +44,8 @@ int	strlen_arr(void **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return (0);
 	while (arr[i])
 		i++;
 	return (i);

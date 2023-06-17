@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/16 20:54:48 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:16:40 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,23 @@ int	colors(char *line, t_mlx *vlx)
 		return (0);
 	}
 	if (ft_strncmp(str_split[0], "F", 1) == 0)
-		vlx->rgb[0] = ft_strdup(str_split[1]);
+	{
+		if (vlx->rgb[0] == NULL)
+			vlx->rgb[0] = ft_strdup(str_split[1]);
+	}
 	else if (ft_strncmp(str_split[0], "C", 1) == 0)
-		vlx->rgb[1] = ft_strdup(str_split[1]);
+	{
+		if (vlx->rgb[1] == NULL)
+			vlx->rgb[1] = ft_strdup(str_split[1]);
+	}
 	free_arr((void ***)&str_split);
 	return (1);
 }
 
 void	walls_fill(char **str_split, t_mlx *vlx, int n)
 {
+	if (vlx->xpm[n] != NULL)
+		return ;
 	vlx->xpm[n] = ft_strdup(str_split[1]);
 	if (vlx->xpm[n][ft_strlen(vlx->xpm[n]) - 1] == '\n')
 		vlx->xpm[n][ft_strlen(vlx->xpm[n]) - 1] = '\0';
@@ -104,6 +112,8 @@ int	parse_input(char *file, t_mlx *vlx)
 		printf("\033[0;31mERROR: unable to open file\n\033[0;37m");
 		exit(EXIT_FAILURE);
 	}
+	vlx->mlx = mlx_init();
+	vlx->win = mlx_new_window(vlx->mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	vlx->rgb = (char **)ft_calloc(sizeof(char *), 3);
 	vlx->xpm = (char **)ft_calloc(sizeof(char *), 5);
 	if (vlx->xpm == NULL || vlx->rgb == NULL)

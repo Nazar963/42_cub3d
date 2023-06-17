@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/16 17:32:08 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 11:37:58 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 18:58:46 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int ac, char **av)
 	vlx.map = NULL;
 	if (ac != 2)
 	{
-		printf("\033[0;31mERORR: invalid number of arg4umets\n\033[0;37m");
+		printf("\033[0;31mERORR: invalid number of argumets\n\033[0;37m");
 		return (0);
 	}
 	else if (!ft_strnstr(ft_strchr(av[1], '.'), ".cub", 4)
@@ -108,8 +108,6 @@ int	main(int ac, char **av)
 		printf("\033[0;31mERROR: invalid input file format\n\033[0;37m");
 		return (0);
 	}
-	vlx.mlx = mlx_init();
-	vlx.win = mlx_new_window(vlx.mlx, SCREEN_WIDTH, SCREEN_HEIGHT, "cub3d");
 	parse_input(av[1], &vlx);
 	if (init_values(&vlx) == 0)
 		new_quit_2(&vlx);

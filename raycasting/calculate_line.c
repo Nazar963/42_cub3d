@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:33 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 11:36:42 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 21:16:41 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@ void	calculate_distance_projected_on_camera_direction(t_mlx *vlx)
 
 void	calculate_draw_start_and_draw_end(t_mlx *vlx)
 {
-	int	draw_start;
-
-	draw_start = (-1) * vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
-	vlx->ray.draw_start = draw_start;
+	vlx->ray.draw_start = (-1) * vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
 	if (vlx->ray.draw_start < 0)
 		vlx->ray.draw_start = 0;
 	vlx->ray.draw_end = vlx->ray.line_height / 2 + SCREEN_HEIGHT / 2;
@@ -43,9 +40,8 @@ void	calculate_texture_x(t_mlx *vlx)
 			* vlx->ray.ray_dir_x;
 	vlx->ray.wall_x -= floor(vlx->ray.wall_x);
 	vlx->ray.text_x = (int)(vlx->ray.wall_x * (double)WALL_WIDTH);
-	if (vlx->ray.side == 0 && vlx->ray.ray_dir_x > 0)
-		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
-	if (vlx->ray.side == 1 && vlx->ray.dir_y < 0)
+	if ((vlx->ray.side == 0 && vlx->ray.ray_dir_x > 0)
+	|| (vlx->ray.side == 1 && vlx->ray.dir_y < 0))
 		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
 }
 
@@ -65,8 +61,6 @@ void	draw_stripe_color_pixel(int i, t_mlx *vlx)
 		wall_pos += step;
 		vlx->ray.color = vlx->wall[vlx->ray.text_num].add
 		[WALL_HEIGHT * vlx->ray.text_y + vlx->ray.text_x];
-		if (vlx->ray.side == 1)
-			vlx->ray.color = (vlx->ray.color >> 1) & 8355711;
 		my_pixel_put(i, y, vlx->ray.color, vlx);
 		y++;
 	}

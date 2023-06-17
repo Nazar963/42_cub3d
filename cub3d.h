@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 11:36:29 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:29:30 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,6 @@ int				parse_map_and_walls_and_colors(int fd, t_mlx *vlx);
 int				parse_input(char *file, t_mlx *vlx);
 
 /* ---------------------------- parse/map_parse.c --------------------------- */
-void			map_checker_helper_1(char *line, t_mlx *vlx);
 int				map_checker(char *line, t_mlx *vlx);
 int				map(int fd, t_mlx *vlx);
 void			quite_1(t_mlx *vlx, int fd);

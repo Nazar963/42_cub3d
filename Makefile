@@ -6,7 +6,7 @@
 #    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/06/17 11:33:45 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/06/17 20:56:45 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,16 @@ libft:
 	@make -C minilibx-linux
 
 $(NAME): $(OFILES)
-	@printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m █████▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ████████▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ██████████\033[0m"
-	@sleep 1
+	# @printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m █████▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ████████▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ██████████\033[0m"
+	# @sleep 1
 	@$(AR) $(ARF) $@ $^
 	@echo "\033[36m compiling\033[0m"
 

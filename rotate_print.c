@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:26:07 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/11 15:31:02 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/17 19:36:10 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,7 @@ void	rotate_left(t_mlx *vlx)
 
 int	check_boarders_helper(int i, int j, t_mlx *vlx)
 {
-	if (i == 0)
-	{
-		while (vlx->map[i][++j])
-			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' '
-				&& !(vlx->map[i][j] >= '\t' && vlx->map[i][j] <= '\r'))
-				return (0);
-	}
-	else if (i == (strlen_arr((void **)vlx->map) - 1))
+	if (i == 0 || i == (strlen_arr((void **)vlx->map) - 1))
 	{
 		while (vlx->map[i][++j])
 			if (vlx->map[i][j] != '1' && vlx->map[i][j] != ' '
