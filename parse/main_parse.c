@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 19:16:40 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 10:05:25 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	parse_input(char *file, t_mlx *vlx)
 	vlx->rgb = (char **)ft_calloc(sizeof(char *), 3);
 	vlx->xpm = (char **)ft_calloc(sizeof(char *), 5);
 	if (vlx->xpm == NULL || vlx->rgb == NULL)
-		return (0);
+		quite_3(vlx, fd);
 	if (parse_map_and_walls_and_colors(fd, vlx) == 0)
 	{
 		if (strlen_arr((void **)vlx->xpm) != 4

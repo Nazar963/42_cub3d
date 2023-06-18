@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 19:29:30 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 10:33:58 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,10 +147,11 @@ int				parse_map_and_walls_and_colors(int fd, t_mlx *vlx);
 int				parse_input(char *file, t_mlx *vlx);
 
 /* ---------------------------- parse/map_parse.c --------------------------- */
-int				map_checker(char *line, t_mlx *vlx);
+int				map_checker(char *line, int fd, t_mlx *vlx);
 int				map(int fd, t_mlx *vlx);
 void			quite_1(t_mlx *vlx, int fd);
 void			evil_line(int fd);
+void			quite_3(t_mlx *vlx, int fd);
 
 /* --------------------------- init/init_values.c --------------------------- */
 int				init_walls(t_mlx *vlx);
@@ -161,6 +162,7 @@ int				init_values(t_mlx *vlx);
 /* ------------------------------ init/colors.c ----------------------------- */
 int				is_color(char **arr);
 int				init_colors(t_mlx *vlx);
+void			quite_4(char *line, int fd, t_mlx *vlx);
 
 /* --------------------------- init/validate_map.c -------------------------- */
 void			set_val(double dir_x, double dir_y, double pla_x, t_mlx *vlx);

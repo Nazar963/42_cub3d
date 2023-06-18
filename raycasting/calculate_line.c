@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:12:33 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 21:16:41 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 10:35:31 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	calculate_texture_x(t_mlx *vlx)
 	vlx->ray.wall_x -= floor(vlx->ray.wall_x);
 	vlx->ray.text_x = (int)(vlx->ray.wall_x * (double)WALL_WIDTH);
 	if ((vlx->ray.side == 0 && vlx->ray.ray_dir_x > 0)
-	|| (vlx->ray.side == 1 && vlx->ray.dir_y < 0))
+		|| (vlx->ray.side == 1 && vlx->ray.dir_y < 0))
 		vlx->ray.text_x = WALL_WIDTH - vlx->ray.text_x - 1;
 }
 

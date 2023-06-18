@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:43:40 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 19:44:51 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 10:34:03 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,22 @@ int	init_colors(t_mlx *vlx)
 		free_arr((void ***)&temp);
 	}
 	return (1);
+}
+
+void	quite_4(char *line, int fd, t_mlx *vlx)
+{
+	free(line);
+	evil_line(fd);
+	close(fd);
+	if (vlx->rgb)
+		free_arr((void ***)&vlx->rgb);
+	if (vlx->xpm)
+		free_arr((void ***)&vlx->xpm);
+	if (vlx->map)
+		free_arr((void ***)&vlx->map);
+	mlx_destroy_window(vlx->mlx, vlx->win);
+	mlx_destroy_display(vlx->mlx);
+	free(vlx->mlx);
+	write(2, "ERORR: Unable to allocate memory\n", 34);
+	exit(EXIT_SUCCESS);
 }
