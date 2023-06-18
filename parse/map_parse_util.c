@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:24:37 by graiolo           #+#    #+#             */
-/*   Updated: 2023/06/18 20:16:28 by graiolo          ###   ########.fr       */
+/*   Updated: 2023/06/18 21:07:11 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,6 @@ static int	valid_form(char **mat)
 	return (0);
 }
 
-static int	ft_isspace(int c)
-{
-	if (c == '\t' || c == '\n' || c == '\v'
-		|| c == '\f' || c == '\r' || c == ' ')
-	{
-		return (1);
-	}
-	return (0);
-}
-
 static void	fill(t_mlx *vlx, char **mat, int x, int y)
 {
 	int	tmp;
@@ -75,12 +65,28 @@ static void	fill(t_mlx *vlx, char **mat, int x, int y)
 		j = 0;
 		while (vlx->map[i][j] != 0)
 		{
-			if (ft_isspace(vlx->map[i][j]) != 1)
+			if (!ft_strchr("\t\n\v\f\r ", vlx->map[i][j]))
 				mat[i + 1][j + 1] = vlx->map[i][j];
 			j++;
 		}
 		i++;
 	}
+}
+
+static char	**alloc(int x, int y, int tmp)
+{
+	char	**new;
+
+	new = ft_calloc(y + 1, sizeof(char *));
+	if (!new)
+		return (NULL);
+	while ((--tmp) != -1)
+	{
+		new[tmp] = ft_calloc(x + 1, 1);
+		if (!new[tmp])
+			return (free(new), NULL);
+	}
+	return (new);
 }
 
 int	hole(t_mlx *vlx)
@@ -100,11 +106,9 @@ int	hole(t_mlx *vlx)
 	}
 	x += 2;
 	y += 2;
-	tmp = y;
-	new = calloc(y + 1, sizeof(char *));
-	while ((--tmp) != -1)
-		new[tmp] = ft_calloc(x + 1, 1);
-	tmp = y;
+	new = alloc(x, y, y);
+	if (!new)
+		return (0);
 	fill(vlx, new, x, y);
 	if (valid_form(new) == 1)
 		return (free_arr(&new), 0);
