@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/18 10:33:58 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:16:11 by graiolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ int				map(int fd, t_mlx *vlx);
 void			quite_1(t_mlx *vlx, int fd);
 void			evil_line(int fd);
 void			quite_3(t_mlx *vlx, int fd);
+
+/* ---------------------------- parse/map_parse_util.c ---------------------- */
+int				hole(t_mlx *vlx);
 
 /* --------------------------- init/init_values.c --------------------------- */
 int				init_walls(t_mlx *vlx);

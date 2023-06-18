@@ -3,22 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
+#    By: graiolo <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/06/18 10:35:59 by naal-jen         ###   ########.fr        #
+#    Updated: 2023/06/18 17:33:57 by graiolo          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = 
 AR = ar -rcs
 INC = -I.
 NAME = cub3d.a
 TARGET = cub3D
 
 CFILES = main.c move.c rotate_print.c init/colors.c init/init_values.c init/validate_map.c \
-	parse/main_parse.c parse/map_parse.c utils/utils.c raycasting/calculate_line.c raycasting/distance.c
+	parse/main_parse.c parse/map_parse.c parse/map_parse_util.c utils/utils.c raycasting/calculate_line.c raycasting/distance.c
 
 OFILES = $(CFILES:.c=.o)
 
@@ -29,16 +29,16 @@ libft:
 	@make -C minilibx-linux
 
 $(NAME): $(OFILES)
-	@printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m █████▒▒▒▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ████████▒▒\033[0m"
-	@sleep 1
-	@printf "\r\033[35m ██████████\033[0m"
-	@sleep 1
+	# @printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m █████▒▒▒▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ████████▒▒\033[0m"
+	# @sleep 1
+	# @printf "\r\033[35m ██████████\033[0m"
+	# @sleep 1
 	@$(AR) $(ARF) $@ $^
 	@echo "\033[36m compiling\033[0m"
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_parse.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 12:53:29 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/18 10:05:25 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/18 20:14:33 by graiolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int	parse_input(char *file, t_mlx *vlx)
 			quite_1(vlx, fd);
 	}
 	close(fd);
-	if (!check_boarders(vlx))
+	if (!check_boarders(vlx) || !hole(vlx))
 		new_quit(vlx);
 	return (1);
 }
