@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:43:40 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/18 10:34:03 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:48:39 by graiolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	init_colors(t_mlx *vlx)
 	while (vlx->rgb[++i])
 	{
 		temp = ft_split(vlx->rgb[i], ',');
-		if (!temp)
+		if (!temp || strlen_arr((void **)temp) != 3)
 			return (0);
 		if (is_color(temp) == 0)
 		{

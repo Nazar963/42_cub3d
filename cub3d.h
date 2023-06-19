@@ -6,7 +6,7 @@
 /*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:32:45 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/18 20:16:11 by graiolo          ###   ########.fr       */
+/*   Updated: 2023/06/19 16:51:17 by graiolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,6 @@
 
 # define WALL_HEIGHT 64
 # define WALL_WIDTH 64
-
-# define MAP_WIDTH 24
-# define MAP_HEIGHT 24
 
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGHT 1000
