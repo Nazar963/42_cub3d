@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parse_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
+/*   By: graiolo <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:24:37 by graiolo           #+#    #+#             */
-/*   Updated: 2023/06/19 09:20:09 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/19 16:12:10 by graiolo          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	hole(t_mlx *vlx)
 {
 	int		x;
 	int		y;
-	int		tmp;
+	int		form;
 	char	**new;
 
 	y = 0;
@@ -110,7 +110,9 @@ int	hole(t_mlx *vlx)
 	if (!new)
 		return (0);
 	fill(vlx, new, x, y);
-	if (valid_form(new) == 1)
-		return (free_arr(&new), 0);
-	return (free_arr(&new), 1);
+	form = valid_form(new);
+	free_arr((void ***)&new);
+	if (form == 1)
+		return (0);
+	return (1);
 }
