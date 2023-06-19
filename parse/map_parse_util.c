@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/18 17:24:37 by graiolo           #+#    #+#             */
-/*   Updated: 2023/06/18 21:07:11 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/19 09:20:09 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 static int	valid_pos(char **mat, int y, int x)
 {
-	if (x > 0 && mat[y][x - 1] != 'E' && mat[y][x - 1] != '1')
+	if (x > 0 && mat[y][x - 1] != 'Z' && mat[y][x - 1] != '1')
 		return (0);
-	if (mat[y][x + 1] != 0 && mat[y][x + 1] != 'E' && mat[y][x + 1] != '1')
+	if (mat[y][x + 1] != 0 && mat[y][x + 1] != 'Z' && mat[y][x + 1] != '1')
 		return (0);
-	if (y > 0 && mat[y - 1][x] != 'E' && mat[y - 1][x] != '1')
+	if (y > 0 && mat[y - 1][x] != 'Z' && mat[y - 1][x] != '1')
 		return (0);
-	if (mat[y + 1] != NULL && mat[y + 1][x] != 'E' && mat[y + 1][x] != '1')
+	if (mat[y + 1] != NULL && mat[y + 1][x] != 'Z' && mat[y + 1][x] != '1')
 		return (0);
 	return (1);
 }
@@ -36,7 +36,7 @@ static int	valid_form(char **mat)
 		x = 0;
 		while (mat[y][x] != 0)
 		{
-			if (mat[y][x] == 'E')
+			if (mat[y][x] == 'Z')
 				if (!valid_pos(mat, y, x))
 					return (1);
 			x++;
@@ -58,7 +58,7 @@ static void	fill(t_mlx *vlx, char **mat, int x, int y)
 	{
 		x = tmp;
 		while (--x != -1)
-			mat[y][x] = 'E';
+			mat[y][x] = 'Z';
 	}
 	while (vlx->map[i] != NULL)
 	{

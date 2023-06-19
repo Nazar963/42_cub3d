@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: graiolo <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/08 15:56:39 by naal-jen          #+#    #+#              #
-#    Updated: 2023/06/18 17:33:57 by graiolo          ###   ########.fr        #
+#    Updated: 2023/06/19 11:19:07 by naal-jen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror
 AR = ar -rcs
 INC = -I.
 NAME = cub3d.a
@@ -29,16 +29,16 @@ libft:
 	@make -C minilibx-linux
 
 $(NAME): $(OFILES)
-	# @printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
-	# @sleep 1
-	# @printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
-	# @sleep 1
-	# @printf "\r\033[35m █████▒▒▒▒▒\033[0m"
-	# @sleep 1
-	# @printf "\r\033[35m ████████▒▒\033[0m"
-	# @sleep 1
-	# @printf "\r\033[35m ██████████\033[0m"
-	# @sleep 1
+	@printf "\033[35m █▒▒▒▒▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ███▒▒▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m █████▒▒▒▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ████████▒▒\033[0m"
+	@sleep 1
+	@printf "\r\033[35m ██████████\033[0m"
+	@sleep 1
 	@$(AR) $(ARF) $@ $^
 	@echo "\033[36m compiling\033[0m"
 
