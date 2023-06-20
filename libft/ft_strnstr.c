@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 19:20:52 by naal-jen          #+#    #+#             */
-/*   Updated: 2022/08/05 19:20:53 by naal-jen         ###   ########.fr       */
+/*   Updated: 2023/06/20 10:33:49 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	i = -1;
 	if (*needle == '\0')
 		return ((char *)haystack);
-	while (haystack[++i] != '\0' && i <= len)
+	while (haystack && haystack[++i] != '\0' && i <= len)
 	{
 		j = 0;
 		if (haystack[i] == needle[j])
