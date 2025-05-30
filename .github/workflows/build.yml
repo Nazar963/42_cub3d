@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y gcc make xorg libxext-dev libbsd-dev
+
+    - name: Build project
+      run: make
+      
+    - name: Verify executable
+      run: |
+        ls -la ./cub3D || ls -la ./cub3d
+        file ./cub3D || file ./cub3d

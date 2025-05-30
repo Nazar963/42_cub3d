@@ -6,7 +6,7 @@
 /*   By: naal-jen <naal-jen@student.42firenze.it    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 16:26:07 by naal-jen          #+#    #+#             */
-/*   Updated: 2023/06/17 19:36:10 by naal-jen         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:23:09 by naal-jen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,6 @@ int	new_quit_2(t_mlx *vlx)
 	mlx_destroy_window(vlx->mlx, vlx->win);
 	mlx_destroy_display(vlx->mlx);
 	free(vlx->mlx);
-	write(2, "ERORR: invalid initialization\n", 32);
+	write(2, "ERORR: invalid initialization\n", 31);
 	exit(EXIT_SUCCESS);
 }

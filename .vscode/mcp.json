@@ -1,0 +1,102 @@
+{
+  "servers": {
+    "FileSystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/nazar/Desktop/LandingPro AI",
+        "."
+      ]
+    },
+    // "Git": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/server-git"
+    //   ]
+    // },
+    "GitHub": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ]
+    },
+    "GitLab": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-gitlab"
+      ],
+      "env": {
+        "GITLAB_PERSONAL_ACCESS_TOKEN": "<YOUR_TOKEN>",
+        "GITLAB_API_URL": "https://gitlab.com/api/v4"
+      }
+    },
+    "Memory": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ]
+    }
+    // "SQLite": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/server-sqlite",
+    //     "/home/nazar/Desktop/LandingPro AI/data.db"
+    //   ]
+    // },
+    // "PostgreSQL": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/server-postgresql",
+    //     "postgresql://user:pass@localhost:5432/mydb"
+    //   ]
+    // },
+    // "LSP": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/create-server",
+    //     "lsp-server",
+    //     "--template",
+    //     "typescript"
+    //   ]
+    // },
+    // "Tests": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/create-server",
+    //     "test-runner",
+    //     "--template",
+    //     "typescript"
+    //   ]
+    // },
+    // "Docs": {
+    //   "type": "stdio",
+    //   "command": "npx",
+    //   "args": [
+    //     "-y",
+    //     "@modelcontextprotocol/create-server",
+    //     "docs-generator",
+    //     "/home/nazar/Desktop/LandingPro AI/docs",
+    //     "--template",
+    //     "typescript"
+    //   ]
+    // }
+  }
+}
